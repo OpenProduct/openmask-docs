@@ -1,0 +1,8 @@
+{
+  "basic": "Основное использование",
+  "auth": "Аутентификация",
+  "optimistic-ui": "Оптимистичный UI",
+  "infinite-loading": "Бесконечная загрузка",
+  "error-handling": "Обработка ошибок",
+  "ssr": "Next.js SSR"
+}
