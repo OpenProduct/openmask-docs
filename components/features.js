@@ -20,7 +20,8 @@ const FEATURES_WITH_TRANSLATIONS = {
     developers: "First-class developers tool",
     gateway: "Powerful dApp gateway",
     secure: "A key vault, secure login",
-    openSource: "Open-source",
+    openSource: "Open-source project",
+    nonCommercial: "Non-commercial",
   },
 };
 
@@ -127,6 +128,30 @@ export default () => {
               viewBox="0 0 24 24"
             >
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+          }
+        />
+        <Feature
+          text={featureText("nonCommercial")}
+          icon={
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+              shape-rendering="geometricPrecision"
+            >
+              <path d="M20 17.58A5 5 0 0018 8h-1.26A8 8 0 104 16.25"></path>
+              <path d="M8 16h.01"></path>
+              <path d="M8 20h.01"></path>
+              <path d="M12 18h.01"></path>
+              <path d="M12 22h.01"></path>
+              <path d="M16 16h.01"></path>
+              <path d="M16 20h.01"></path>
             </svg>
           }
         />

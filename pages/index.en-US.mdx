@@ -4,6 +4,7 @@ title: A TON Wallet in your Browser
 
 import Callout from 'nextra-theme-docs/callout'
 import Features from 'components/features'
+import Examples from 'components/example'
 import Bleed from 'nextra-theme-docs/bleed'
 
 {
@@ -13,13 +14,7 @@ import Bleed from 'nextra-theme-docs/bleed'
 
 <Bleed><Features/></Bleed>
 
-The name “SWR” is derived from `stale-while-revalidate`, a HTTP cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861).
-SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data.
-
-<Callout emoji="✅">
-  With SWR, components will get a stream of data updates <strong>constantly</strong> and <strong>automatically</strong>.<br/>
-  And the UI will be always <strong>fast</strong> and <strong>reactive</strong>.
-</Callout>
+TonMask wallet is duplicate MetaMask for The Open Network. TON blockchain has different interfaces with rest of blockchains, which makes it impossible to adapt existing wallets to use it. TonMask web extension wallet have the same architecture as a MetaMask, but build in a modern stack and with more functional approach.
 
 <div className="mt-16 mb-20 text-center">
   [Get Started](/docs/getting-started) · [Examples](/examples/basic) · [Blog](/blog/swr-v1) · [GitHub Repository](https://github.com/vercel/swr)
@@ -27,17 +22,7 @@ SWR is a strategy to first return the data from cache (stale), then send the fet
 
 ## Overview
 
-```jsx
-import useSWR from 'swr'
-
-function Profile() {
-  const { data, error } = useSWR('/api/user', fetcher)
-
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <div>hello {data.name}!</div>
-}
-```
+<Examples />
 
 In this example, the `useSWR` hook accepts a `key` string and a `fetcher` function. `key` is a unique identifier of the data (normally the API URL)
 and will be passed to `fetcher`. `fetcher` can be any asynchronous function which returns the data, you can use the native fetch or tools like Axios.
@@ -82,3 +67,8 @@ SWR is created by the same team behind [Next.js](https://nextjs.org), the React 
 Follow [@vercel](https://twitter.com/vercel) on Twitter for future project updates.
 
 Feel free to join the [discussions on GitHub](https://github.com/vercel/swr/discussions)!
+
+<Callout emoji="✅">
+  With SWR, components will get a stream of data updates <strong>constantly</strong> and <strong>automatically</strong>.<br/>
+  And the UI will be always <strong>fast</strong> and <strong>reactive</strong>.
+</Callout>
