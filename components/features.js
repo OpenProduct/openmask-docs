@@ -20,8 +20,8 @@ const FEATURES_WITH_TRANSLATIONS = {
     developers: "First-class developers tool",
     gateway: "Powerful dApp gateway",
     secure: "A key vault, secure login",
-    openSource: "Open-source project",
-    nonCommercial: "Non-commercial",
+    openSource: "Open-source",
+    nonCommercial: "Non-commercial project",
   },
 };
 
@@ -139,11 +139,11 @@ export default () => {
               width="24"
               height="24"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               fill="none"
-              shape-rendering="geometricPrecision"
+              shapeRendering="geometricPrecision"
             >
               <path d="M20 17.58A5 5 0 0018 8h-1.26A8 8 0 104 16.25"></path>
               <path d="M8 16h.01"></path>

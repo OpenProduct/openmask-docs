@@ -1,0 +1,175 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# TON Provider API
+
+TonMask injects a global API into websites visited by its users at `window.ton`. This API allows websites to request users' TON accounts,
+read data from blockchains the user is connected to, and suggest that the user sign messages and transactions. The presence of the provider
+object indicates an TON user.
+
+```js
+// get injected provider from window
+const provider = window.ton;
+
+if (provider) {
+  // From now on, this should always be true:
+  console.log('isTonMask=', provider.isTonMask);
+
+  startApp(provider); // initialize your app
+} else {
+  console.log('Please install TonMask!');
+}
+
+```
+
+## Basic Usage
+
+For any non-trivial TON web application — a.k.a. dapp, web3 site etc. — to work, you will have to:
+
+- Detect the TON provider (`window.ton`)
+- Detect which TON network the user is connected to
+- Get the user's TON account(s)
+
+The provider API is all you need to create a full-featured web3 application.
+
+## Properties
+
+### ton.isTonMask
+
+<Callout>This property is non-standard. Non-TonMask providers may also set this property to `true`.</Callout>
+
+`true` if the user has TonMask installed.
+
+## Methods
+
+### ton.isConnected()
+
+```js
+ton.isConnected(): boolean;
+```
+
+Returns `true` if the provider is connected to the current chain, and false otherwise.
+
+If the provider is not connected, the page will have to be reloaded in order for connection to be re-established.
+
+### ton.send(args)
+
+```js
+ton.send(method: string, params?: unknown[] | object): Promise<unknown>;
+```
+
+Use request to submit RPC requests to TON via TonMask. It returns a Promise that resolves to the result of the RPC method call.
+
+The params and return value will vary by RPC method. In practice, if a method has any params, they are almost always of type `Array<any>`.
+
+If the request fails for any reason, the Promise will reject with an `Error`.
+
+See the TonMask [RPC API documentation](/docs/api-reference/rpc-api) for details.
+
+## Events
+
+The TonMask provider implements the [Node.js EventEmitter](https://nodejs.org/api/events.html) API. This sections details the events emitted
+via that API. There are innumerable `EventEmitter` guides elsewhere, but you can listen for events like this:
+
+```js
+ton.on('accountsChanged', (accounts) => {
+  // Handle the new accounts, or lack thereof.
+  // "accounts" will always be an array, but it can be empty.
+});
+
+ton.on('networkChanged', (networkId) => {
+  // Handle the new network.
+  // Correctly handling chain changes can be complicated.
+  // We recommend reloading the page unless you have good reason not to.
+  window.location.reload();
+});
+```
+
+Also, don't forget to remove listeners once you are done listening to them (for example on component unmount in React):
+
+```js
+function handleAccountsChanged(accounts) {
+  // ...
+}
+
+ton.on('accountsChanged', handleAccountsChanged);
+
+// Later
+
+ton.removeListener('accountsChanged', handleAccountsChanged);
+```
+
+The first argument of the `ton.removeListener` is the event name and the second argument is the reference to the same
+function which has passed to ethereum.on for the event name mentioned in the first argument.
+
+### accountsChanged
+
+```js
+ton.on('accountsChanged', handler: (accounts: Array<string>) => void);
+```
+
+The TonMask provider emits this event whenever the return value of the `ton_requestAccounts` RPC method changes.
+`ton_requestAccounts` returns an array that is either empty or contains a single account address. The returned address,
+if any, is the address of the most recently used account that the caller is permitted to access. Callers are identified
+by their URL origin, which means that all sites with the same origin share the same permissions.
+
+This means that `accountsChanged` will be emitted whenever the user's exposed account address changes.
+
+### networkChanged
+
+```js
+ton.on('networkChanged', handler: (networkId: string) => void);
+```
+
+The TonMask provider emits this event when the currently connected network changes.
+
+All RPC requests are submitted to the currently connected chain. Therefore, it's critical to
+keep track of the current network by listening for this event.
+
+## Errors
+
+```js
+interface ProviderRpcError extends Error {
+  message: string;
+}
+```
+
+The [`ton.send(args)` method](#tonsendargs) throws errors eagerly.
+
+## Using the Provider
+
+```js
+
+const provider = window.ton;
+
+(async () => {
+    try {
+        const accounts = await provider.send('ton_getAccounts');
+        const account = accounts[0];
+        setAddress(account);
+
+        const balance = await provider.send('ton_getBalance');
+        setBalance(balance);
+    } catch (e) {
+        console.error(e);
+    }
+})();
+
+const connect = () => {
+    try {
+        const accounts = await provider.send('ton_requestAccounts');
+        const account = accounts[0];
+        setAddress(account);
+
+        const balance = await provider.send('ton_getBalance');
+        setBalance(balance);
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+document
+    .getElementById('connectButton')
+    .addEventListener('click', connect);
+
+```
