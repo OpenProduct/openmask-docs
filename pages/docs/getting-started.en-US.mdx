@@ -1,5 +1,6 @@
 import Callout from 'nextra-theme-docs/callout'
 import Link from 'next/link'
+import Connect from 'components/connect-ton'
 
 # Getting Started
 
@@ -51,3 +52,44 @@ should call the following method:
 ```js
 provider.send('ton_requestAccounts');
 ```
+
+### Examples
+
+#### React.js
+
+```jsx
+export default () => {
+  const [address, setAddress] = useState("");
+  const [balance, setBalance] = useState("");
+
+  const connect = async () => {
+    const provider = window.ton;
+    try {
+      const accounts = await provider.send("ton_requestAccounts");
+      const account = accounts[0];
+      setAddress(account);
+
+      const balance = await provider.send("ton_getBalance");
+      setBalance(String(Number(balance) / 1000000000));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    connect();
+  }, []);
+
+  return (
+    <div>
+      <button onClick={connect} >
+        Connect TonMask
+      </button>
+      {address && (<div>{address}<br />{balance} TON</div>)}
+    </div>
+  );
+};
+
+```
+
+<Connect />
