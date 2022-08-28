@@ -8,18 +8,21 @@ read data from blockchains the user is connected to, and suggest that the user s
 object indicates an TON user.
 
 ```js
-// get injected provider from window
-const provider = window.ton;
 
-if (provider) {
-  // From now on, this should always be true:
+// get injected provider from window
+if (window.ton) {
+    onTonReady();
+} else {
+    window.addEventListener('tonready', () => onTonReady(), false);
+}
+
+function onTonReady() {
+  const provider = window.ton;
+
   console.log('isTonMask=', provider.isTonMask);
 
   startApp(provider); // initialize your app
-} else {
-  console.log('Please install TonMask!');
 }
-
 ```
 
 ## Basic Usage
@@ -45,12 +48,22 @@ The provider API is all you need to create a full-featured web3 application.
 ### ton.isConnected()
 
 ```js
-ton.isConnected(): boolean;
+ton.isConnected(): Promise<boolean>;
 ```
 
-Returns `true` if the provider is connected to the current chain, and false otherwise.
+This method returns a `Promise` that resolves to a `true` if the provider is connected to the current chain, or throw `Error` otherwise.
 
 If the provider is not connected, the page will have to be reloaded in order for connection to be re-established.
+
+### ton.isLocked()
+
+```js
+ton.isLocked(): Promise<boolean>;
+```
+
+This method returns a `Promise` that resolves to a `boolean` indicating if TonMask is unlocked by the user.
+TonMask must be unlocked in order to perform any operation involving user accounts. Note that this method
+does not indicate if the user has exposed any accounts to the caller.
 
 ### ton.send(args)
 
@@ -77,8 +90,8 @@ ton.on('accountsChanged', (accounts) => {
   // "accounts" will always be an array, but it can be empty.
 });
 
-ton.on('networkChanged', (networkId) => {
-  // Handle the new network.
+ton.on('chainChanged', (chainId) => {
+  // Handle the new chain.
   // Correctly handling chain changes can be complicated.
   // We recommend reloading the page unless you have good reason not to.
   window.location.reload();
@@ -115,10 +128,10 @@ by their URL origin, which means that all sites with the same origin share the s
 
 This means that `accountsChanged` will be emitted whenever the user's exposed account address changes.
 
-### networkChanged
+### chainChanged
 
 ```js
-ton.on('networkChanged', handler: (networkId: string) => void);
+ton.on('chainChanged', handler: (chainId: string) => void);
 ```
 
 The TonMask provider emits this event when the currently connected network changes.
@@ -142,27 +155,11 @@ The [`ton.send(args)` method](#tonsendargs) throws errors eagerly.
 
 const provider = window.ton;
 
-(async () => {
-    try {
-        const accounts = await provider.send('ton_getAccounts');
-        const account = accounts[0];
-        setAddress(account);
-
-        const balance = await provider.send('ton_getBalance');
-        setBalance(balance);
-    } catch (e) {
-        console.error(e);
-    }
-})();
-
-const connect = () => {
+const connect = async () => {
     try {
         const accounts = await provider.send('ton_requestAccounts');
         const account = accounts[0];
         setAddress(account);
-
-        const balance = await provider.send('ton_getBalance');
-        setBalance(balance);
     } catch (e) {
         console.error(e);
     }

@@ -2,3 +2,135 @@ import Callout from 'nextra-theme-docs/callout'
 import Link from 'next/link'
 
 # RPC API
+
+TonMask uses the `ton.send(args)` method to wrap an RPC API.
+
+The API is based on an interface exposed by all TON clients, along with a growing number of methods that may or may not be supported by other wallets.
+
+## Methods
+
+### ton_getLocked
+
+#### Returns
+
+`boolean` - is wallet locked
+
+#### Description
+
+This method is indicating if TonMask is unlocked by the user.
+TonMask must be unlocked in order to perform any operation involving user accounts. Note that this method
+does not indicate if the user has exposed any accounts to the caller.
+
+#### Example
+
+```js
+ton.send("ton_getLocked")
+    .then(locked => console.log({ locked }))
+    .catch((error) => {
+        console.error(error);
+    });
+```
+
+### ton_getChain
+
+#### Returns
+
+`string` - the network name
+
+#### Description
+
+Chain id string representing the current blockchain's network ID.
+
+#### Example
+
+```js
+ton.send("ton_getChain")
+    .then(chainId => console.log({ chainId }))
+    .catch((error) => {
+        console.error(error);
+    });
+```
+
+### ton_requestAccounts
+
+#### Returns
+
+`string[]` - An array of a single, TON address string.
+
+#### Description
+
+Requests that the user provides a TON address to be identified by. Returns a Promise that resolves to an array of TON address string.
+If the user denies the request, the Promise will reject with a `Error`.
+
+The request causes a TonMask popup to appear. You should only request the user's accounts in response to user action, such as a button click.
+You should always disable the button that caused the request to be dispatched, while the request is still pending.
+
+If you can't retrieve the user's account(s), you should encourage the user to initiate an account request.
+
+#### Example
+
+```js
+document.getElementById('connectButton', connect);
+
+function connect() {
+  ton
+    .send("ton_requestAccounts")
+    .then(handleAccountsChanged)
+    .catch((error) => {
+        console.log('Please connect to TonMask.');
+    });
+}
+```
+
+### ton_getBalance
+
+#### Parameters
+
+- `void | undefined` - balance for active address;
+- `string` - address to check for balance
+
+#### Returns
+
+`string` - balance in nanocoin/wei
+
+#### Example
+
+```js
+
+function handleBalance(balance) {
+    console.log(String(Number(balance) / 1000000000))
+}
+
+ton.send("ton_getBalance")
+    .then(handleBalance)
+    .catch((error) => {
+        console.error(error);
+    });
+
+ton.send("ton_getBalance", "EQDdTENo4SOc3ax3f86RuWnfLz5Sablz3fsyGvCA5uq3eUPG")
+    .then(handleBalance)
+    .catch((error) => {
+        console.error(error);
+    });
+```
+
+### ton_sendTransaction
+
+#### Parameters
+
+```js
+interface TransactionParams {
+    // Nanotons to send
+    value: string;
+    // Destination address
+    to: string;
+    // Additional data (comment)
+    data: string;
+}
+```
+
+#### Returns
+
+### ton_importJetton
+
+#### Parameters

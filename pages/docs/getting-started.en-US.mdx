@@ -76,13 +76,9 @@ export default () => {
     }
   };
 
-  useEffect(() => {
-    connect();
-  }, []);
-
   return (
     <div>
-      <button onClick={connect} >
+      <button onClick={connect}>
         Connect TonMask
       </button>
       {address && (<div>{address}<br />{balance} TON</div>)}

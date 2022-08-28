@@ -21,10 +21,6 @@ export default () => {
     }
   };
 
-  useEffect(() => {
-    connect();
-  }, []);
-
   return (
     <div className="py-8">
       <button
