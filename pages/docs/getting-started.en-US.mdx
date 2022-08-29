@@ -1,6 +1,7 @@
 import Callout from 'nextra-theme-docs/callout'
 import Link from 'next/link'
-import Connect from 'components/connect-ton'
+import Connect from 'components/example/connect'
+import Transaction from 'components/example/transaction'
 
 # Getting Started
 
@@ -55,7 +56,7 @@ provider.send('ton_requestAccounts');
 
 ### Examples
 
-#### React.js
+#### Connect
 
 ```jsx
 export default () => {
@@ -89,3 +90,56 @@ export default () => {
 ```
 
 <Connect />
+
+#### Transaction
+
+```jsx
+export default () => {
+  const [disabled, setDisabled] = useState(false);
+  const [isSent, setSent] = useState(false);
+  const [isConfirm, setConfirm] = useState(false);
+
+  const send = async () => {
+    const provider = window.ton;
+
+    console.log("isTonMask=", provider.isTonMask);
+    setDisabled(true);
+    try {
+      const seqNo = await provider.send("ton_sendTransaction", {
+        to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+        value: "100000000",
+        data: "Donate",
+      });
+      setSent(true);
+      await provider.send("ton_confirmTransaction", seqNo);
+      setConfirm(true);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setDisabled(false);
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        Donate address: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
+      </div>
+      <button disabled={disabled} onClick={send}>
+        Send 0.1 TON
+      </button>
+      {isSent && (
+        <div>
+          {isConfirm
+            ? "Success. Transaction confirm!"
+            : "Transaction Pending... ~15 sec"}
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+```
+
+<Transaction />
