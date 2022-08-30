@@ -5,11 +5,7 @@
     "hidden": true
   },
   "docs": {
-    "title": "Docs",
-    "type": "page"
-  },
-  "examples": {
-    "title": "Examples",
+    "title": "Documentation",
     "type": "page"
   },
   "blog": {

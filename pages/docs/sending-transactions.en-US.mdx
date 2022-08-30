@@ -34,6 +34,8 @@ export default () => {
     console.log("isTonMask=", provider.isTonMask);
     setDisabled(true);
     try {
+      await provider.send("ton_requestAccounts");
+
       const seqNo = await provider.send("ton_sendTransaction", [{
         to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
         value: "100000000",
