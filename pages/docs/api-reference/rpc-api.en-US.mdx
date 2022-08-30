@@ -107,7 +107,7 @@ ton.send("ton_getBalance")
         console.error(error);
     });
 
-ton.send("ton_getBalance", "EQDdTENo4SOc3ax3f86RuWnfLz5Sablz3fsyGvCA5uq3eUPG")
+ton.send("ton_getBalance", ["EQDdTENo4SOc3ax3f86RuWnfLz5Sablz3fsyGvCA5uq3eUPG"])
     .then(handleBalance)
     .catch((error) => {
         console.error(error);
@@ -124,13 +124,48 @@ interface TransactionParams {
     value: string;
     // Destination address
     to: string;
-    // Additional data (comment)
-    data: string;
+    // Source address (optional)
+    from?: string;
+    // Additional data (comment) (optional)
+    data?: string;
 }
 ```
 
 #### Returns
 
-### ton_importJetton
+`number` - wallet the sequence number (seqno)
+
+#### Description
+
+Wallet the sequence number this is similar to the nonce on Ethereum and holds
+the sequence number of the last transaction executed (used to prevent [replay attacks](https://en.wikipedia.org/wiki/Replay_attack))
+
+Use `ton_confirmWalletSeqNo` to get confirmation that transaction is completely done.
+
+Learn more about [Seqno-based wallets](https://ton.org/docs/#/howto/payment-processing?id=seqno-based-wallets).
+
+#### Example
+
+```js
+const seqNo = await provider.send("ton_sendTransaction", [{
+    to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+    value: "100000000",
+    data: "Comment",
+}]);
+```
+
+### ton_confirmWalletSeqNo
 
 #### Parameters
+
+`number` - the wallet sequence number (seqno)
+
+#### Returns
+
+Returns a `Promise` that resolves when the wallet sequence number would be more the passed `seqNo`.
+
+#### Example
+
+```js
+await provider.send("ton_confirmWalletSeqNo", [seqNo]);
+```

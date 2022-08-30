@@ -1,0 +1,95 @@
+import Transaction from 'components/example/transaction'
+
+# Sending Transactions
+
+Transactions are a formal action on a blockchain. They are always initiated in TonMask with a call to the `ton_sendTransaction` method.
+They can involve a simple sending of TON, may result in sending tokens, creating a new smart contract, or changing state on the blockchain
+in any number of ways. They are always initiated by a signature from an external account, or a simple key pair.
+
+In TonMask, using the `ton.send` method directly, sending a transaction will involve composing an options object like this:
+
+```js
+const params = {
+    to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+    value: "100000000",
+    data: "Donate",
+}
+
+const seqNo = await provider.send("ton_sendTransaction", [params]);
+```
+
+### Example
+
+<Transaction />
+
+```jsx
+export default () => {
+  const [disabled, setDisabled] = useState(false);
+  const [isSent, setSent] = useState(false);
+  const [isConfirm, setConfirm] = useState(false);
+
+  const send = async () => {
+    const provider = window.ton;
+
+    console.log("isTonMask=", provider.isTonMask);
+    setDisabled(true);
+    try {
+      const seqNo = await provider.send("ton_sendTransaction", [{
+        to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+        value: "100000000",
+        data: "Donate",
+      }]);
+      setSent(true);
+      await provider.send("ton_confirmWalletSeqNo", [seqNo]);
+      setConfirm(true);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setDisabled(false);
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        Official TonMask donate address:
+        "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
+      </div>
+      <button disabled={disabled} onClick={send}>
+        Send 0.1 TON
+      </button>
+      {isSent && (
+        <div>
+          {isConfirm
+            ? "Success. Transaction confirm!"
+            : "Transaction Pending... ~15 sec"}
+        </div>
+      )}
+    </div>
+  );
+};
+
+```
+
+### Transaction Parameters
+
+#### to
+
+Destination TON address. Required for transactions with a recipient (all transactions except for contract creation).
+
+#### value
+
+Value of the network's native currency to send which is denominated in nanoTONs
+
+Please note that these numbers often used in TON are far higher precision than native JavaScript numbers,
+and can cause unpredictable behavior if not anticipated. For this reason, we highly recommend using [BN.js](https://github.com/indutny/bn.js/)
+when manipulating values intended for the blockchain.
+
+#### from (optional)
+
+Source TON address. In case if you application mange a few address for user. If the value isn't spotify,
+it would be automatically choose address with a dApp have access.
+
+#### data (optional)
+
+Additional data (comment)

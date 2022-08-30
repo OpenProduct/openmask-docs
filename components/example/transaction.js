@@ -14,13 +14,17 @@ export default () => {
     console.log("isTonMask=", provider.isTonMask);
     setDisabled(true);
     try {
-      const seqNo = await provider.send("ton_sendTransaction", {
-        to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
-        value: "100000000",
-        data: "Donate",
-      });
+      await provider.send("ton_requestAccounts");
+
+      const seqNo = await provider.send("ton_sendTransaction", [
+        {
+          to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+          value: "100000000",
+          data: "Donate",
+        },
+      ]);
       setSent(true);
-      await provider.send("ton_confirmTransaction", seqNo);
+      await provider.send("ton_confirmWalletSeqNo", [seqNo]);
       setConfirm(true);
     } catch (e) {
       console.error(e);
@@ -32,7 +36,8 @@ export default () => {
   return (
     <div className="py-8">
       <div className="pb-4">
-        Donate address: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
+        Official TonMask donate address:
+        "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
       </div>
       <button
         disabled={disabled}
