@@ -2,11 +2,11 @@ import Transaction from 'components/example/transaction'
 
 # Sending Transactions
 
-Transactions are a formal action on a blockchain. They are always initiated in TonMask with a call to the `ton_sendTransaction` method.
+Transactions are a formal action on a blockchain. They are always initiated in OpenMask with a call to the `ton_sendTransaction` method.
 They can involve a simple sending of TON, may result in sending tokens, creating a new smart contract, or changing state on the blockchain
 in any number of ways. They are always initiated by a signature from an external account, or a simple key pair.
 
-In TonMask, using the `ton.send` method directly, sending a transaction will involve composing an options object like this:
+In OpenMask, using the `ton.send` method directly, sending a transaction will involve composing an options object like this:
 
 ```js
 const params = {
@@ -31,7 +31,7 @@ export default () => {
   const send = async () => {
     const provider = window.ton;
 
-    console.log("isTonMask=", provider.isTonMask);
+    console.log("isOpenMask=", provider.isOpenMask);
     setDisabled(true);
     try {
       await provider.send("ton_requestAccounts");
@@ -54,7 +54,7 @@ export default () => {
   return (
     <div>
       <div>
-        Official TonMask donate address:
+        Official OpenMask donate address:
         "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
       </div>
       <button disabled={disabled} onClick={send}>
@@ -81,7 +81,7 @@ Destination TON address. Required for transactions with a recipient (all transac
 
 #### value
 
-Value of the network's native currency to send which is denominated in nanoTONs
+Value of the network's native currency to send. Value is denominated in nanoTONs, in gwei, which is 1e-9 TON.
 
 Please note that these numbers often used in TON are far higher precision than native JavaScript numbers,
 and can cause unpredictable behavior if not anticipated. For this reason, we highly recommend using [BN.js](https://github.com/indutny/bn.js/)

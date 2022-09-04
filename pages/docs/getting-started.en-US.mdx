@@ -5,12 +5,12 @@ import Transaction from 'components/example/transaction'
 
 # Getting Started
 
-To develop for TonMask, install TonMask in the browser of your choice on your development machine. [Download here](/#).
+To develop for OpenMask, install OpenMask in the browser of your choice on your development machine. [Download here](/#).
 
 <Callout>This guide assumes intermediate knowledge of HTML, CSS, and JavaScript.</Callout>
 
-Once TonMask is installed and running (make sure you back up your Secret Recovery Phrase), you should find that new
-browser tabs have a `window.ton` object available in the developer console. This is how your website will interact with TonMask.
+Once OpenMask is installed and running (make sure you back up your Secret Recovery Phrase), you should find that new
+browser tabs have a `window.ton` object available in the developer console. This is how your website will interact with OpenMask.
 
 You can review the full API for that object [here](/docs/api-reference/ton-provider).
 
@@ -18,19 +18,19 @@ You can review the full API for that object [here](/docs/api-reference/ton-provi
 
 ### Web3 Browser Detection
 
-To verify if the browser is running TonMask, copy and paste the code snippet below in the developer console of your web browser:
+To verify if the browser is running OpenMask, copy and paste the code snippet below in the developer console of your web browser:
 
 ```js
 if (typeof window.ton !== 'undefined') {
-  console.log('TonMask is installed!');
+  console.log('OpenMask is installed!');
 }
 ```
 
 You can review the full API for the `window.ton` object [here](/docs/api-reference/ton-provider).
 
-### Detecting TonMask
+### Detecting OpenMask
 
-If you want to differentiate MetaMask from other TON-compatible browsers, you can detect TonMask using `ton.isTonMask`.
+If you want to differentiate MetaMask from other TON-compatible browsers, you can detect OpenMask using `ton.isOpenMask`.
 
 ### User State
 
@@ -39,15 +39,15 @@ Currently there are a few stateful things to consider when interacting with this
 - What is the current network?
 - What is the current account?
 
-### Connecting to TonMask
+### Connecting to OpenMask
 
-"Connecting" or "logging in" to TonMask effectively means "to access the user's TON account(s)".
+"Connecting" or "logging in" to OpenMask effectively means "to access the user's TON account(s)".
 
 You should _only_ initiate a connection request in response to direct user action, such as clicking a button.
 You should _always_ disable the "connect" button while the connection request is pending. You should _never_
 initiate a connection request on page load.
 
-We recommend that you provide a button to allow the user to connect TonMask to your dapp. Clicking this button
+We recommend that you provide a button to allow the user to connect OpenMask to your dapp. Clicking this button
 should call the following method:
 
 ```js
@@ -80,7 +80,7 @@ export default () => {
   return (
     <div>
       <button onClick={connect}>
-        Connect TonMask
+        Connect OpenMask
       </button>
       {address && (<div>{address}<br />{balance} TON</div>)}
     </div>
@@ -102,7 +102,7 @@ export default () => {
   const send = async () => {
     const provider = window.ton;
 
-    console.log("isTonMask=", provider.isTonMask);
+    console.log("isOpenMask=", provider.isOpenMask);
     setDisabled(true);
     try {
       const seqNo = await provider.send("ton_sendTransaction", [{
@@ -123,8 +123,7 @@ export default () => {
   return (
     <div>
       <div>
-        Official TonMask donate address:
-        "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
+        OpenMask donate address: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
       </div>
       <button disabled={disabled} onClick={send}>
         Send 0.1 TON

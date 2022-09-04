@@ -1,6 +1,6 @@
-# TonMask docs
+# OpenMask docs
 
-The official website for TonMask
+The official website for OpenMask
 
 The project uses [pnpm](https://pnpm.io) and [Nextra](https://nextra.vercel.app). To develop it locally, clone this repository and run the following command to start the local dev server:
 

@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
 
-const Logo = () => (
-  <img width="45" src="/tonmask-logo.svg" />
-);
+const Logo = () => <img width="45" src="/tonmask-logo.svg" />;
 
 const TITLE_WITH_TRANSLATIONS = {
   "en-US": "A TON Wallet in your Browser",
@@ -15,14 +13,12 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
 export default {
   projectLink: "https://github.com/TonMask/tonmask-extension",
   docsRepositoryBase: "https://github.com/TonMask/tonmask-documentation",
-  titleSuffix: " – TonMask",
+  titleSuffix: " – OpenMask",
   search: true,
   unstable_flexsearch: true,
   floatTOC: true,
   feedbackLink: () => {
-    return (
-      FEEDBACK_LINK_WITH_TRANSLATIONS["en-US"]
-    );
+    return FEEDBACK_LINK_WITH_TRANSLATIONS["en-US"];
   },
   feedbackLabels: "feedback",
   logo: () => {
@@ -32,9 +28,9 @@ export default {
         <Logo />
         <span
           className="mx-4 font-extrabold hidden md:inline select-none"
-          title={"TonMask: " + (TITLE_WITH_TRANSLATIONS[locale] || "")}
+          title={"OpenMask: " + (TITLE_WITH_TRANSLATIONS[locale] || "")}
         >
-          TonMask
+          OpenMask
         </span>
       </>
     );
@@ -44,7 +40,7 @@ export default {
 
     return (
       <>
-        {/* Favicons, meta */} 
+        {/* Favicons, meta */}
         <link rel="icon" href="/tonmask-logo.svg" type="image/svg+xml" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <link
@@ -71,10 +67,12 @@ export default {
         <meta
           name="og:title"
           content={
-            title ? title + " – TonMask" : "TonMask: A TON Wallet in your Browser"
+            title
+              ? title + " – OpenMask"
+              : "OpenMask: A TON Wallet in your Browser"
           }
         />
-        <meta name="apple-mobile-web-app-title" content="TonMask" />
+        <meta name="apple-mobile-web-app-title" content="OpenMask" />
       </>
     );
   },
@@ -99,7 +97,5 @@ export default {
         );
     }
   },
-  i18n: [
-    { locale: "en-US", text: "English" },
-  ],
+  i18n: [{ locale: "en-US", text: "English" }],
 };

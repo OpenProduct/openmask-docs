@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 # RPC API
 
-TonMask uses the `ton.send(args)` method to wrap an RPC API.
+OpenMask uses the `ton.send(args)` method to wrap an RPC API.
 
 The API is based on an interface exposed by all TON clients, along with a growing number of methods that may or may not be supported by other wallets.
 
@@ -17,8 +17,8 @@ The API is based on an interface exposed by all TON clients, along with a growin
 
 #### Description
 
-This method is indicating if TonMask is unlocked by the user.
-TonMask must be unlocked in order to perform any operation involving user accounts. Note that this method
+This method is indicating if OpenMask is unlocked by the user.
+OpenMask must be unlocked in order to perform any operation involving user accounts. Note that this method
 does not indicate if the user has exposed any accounts to the caller.
 
 #### Example
@@ -62,7 +62,7 @@ ton.send("ton_getChain")
 Requests that the user provides a TON address to be identified by. Returns a Promise that resolves to an array of TON address string.
 If the user denies the request, the Promise will reject with a `Error`.
 
-The request causes a TonMask popup to appear. You should only request the user's accounts in response to user action, such as a button click.
+The request causes a OpenMask popup to appear. You should only request the user's accounts in response to user action, such as a button click.
 You should always disable the button that caused the request to be dispatched, while the request is still pending.
 
 If you can't retrieve the user's account(s), you should encourage the user to initiate an account request.
@@ -77,7 +77,7 @@ function connect() {
     .send("ton_requestAccounts")
     .then(handleAccountsChanged)
     .catch((error) => {
-        console.log('Please connect to TonMask.');
+        console.log('Please connect to OpenMask.');
     });
 }
 ```

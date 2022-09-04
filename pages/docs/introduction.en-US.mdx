@@ -3,12 +3,12 @@ import Link from 'next/link'
 
 # Introduction
 
-Welcome to TonMask’s Developer Documentation. TonMask is the trailblazing tool enabling user interactions and experience on Web3.
-It is currently available as a browser extension. The purpose of this documentation is to illustrate how to build a dapp with TonMask.
+Welcome to OpenMask’s Developer Documentation. OpenMask is the trailblazing tool enabling user interactions and experience on Web3.
+It is currently available as a browser extension. The purpose of this documentation is to illustrate how to build a dapp with OpenMask.
 
-## Why TonMask
+## Why OpenMask
 
-TonMask was created to meet the needs of secure and usable TON-based web sites. In particular, it handles account management and connecting the user to the blockchain.
+OpenMask was created to meet the needs of secure and usable TON-based web sites. In particular, it handles account management and connecting the user to the blockchain.
 
 - [Get started here](/docs/getting-started)
 - [Learn more about our JavaScript Provider API](/docs/api-reference/ton-provider)
@@ -16,19 +16,19 @@ TonMask was created to meet the needs of secure and usable TON-based web sites. 
 
 ## Account Management
 
-TonMask allows users to manage accounts and their keys in a variety of ways, including hardware wallets, while isolating them from
+OpenMask allows users to manage accounts and their keys in a variety of ways, including hardware wallets, while isolating them from
 the site context. This is a great security improvement over storing the user keys on a single central server, or even in local storage,
 which can allow for [mass account thefts](https://www.ccn.com/cryptocurrency-exchange-etherdelta-hacked-in-dns-hijacking-scheme/).
 
 This security feature also comes with developer convenience: For developers, you simply interact with the globally available TON API
-that identifies the users of web3-compatible browsers (like TonMask users), and whenever you request a transaction signature
-(like `ton_requestAccounts`, `ton_getBalance`, or others), TonMask will prompt the user in as comprehensible a way as possible.
+that identifies the users of web3-compatible browsers (like OpenMask users), and whenever you request a transaction signature
+(like `ton_requestAccounts`, `ton_getBalance`, or others), OpenMask will prompt the user in as comprehensible a way as possible.
 This keeps users informed, and leaves attackers only the option of trying to phish individual users, rather than performing mass hacks
 ([although DNS hacks can still be used for phishing en masse](https://medium.com/metamask/new-phishing-strategy-becoming-common-1b1123837168)).
 
 ## Blockchain Connection
 
-TonMask comes pre-loaded with fast connections to the TON mainnet and testnet blockchain via public [toncenter.com](https://toncenter.com/) api.
+OpenMask comes pre-loaded with fast connections to the TON mainnet and testnet blockchain via public [toncenter.com](https://toncenter.com/) api.
 This allows you to get started without synchronizing a full node, while still providing the option to upgrade your security and use the blockchain
 provider of your choice.
 

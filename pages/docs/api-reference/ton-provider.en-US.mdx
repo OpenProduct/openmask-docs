@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 # TON Provider API
 
-TonMask injects a global API into websites visited by its users at `window.ton`. This API allows websites to request users' TON accounts,
+OpenMask injects a global API into websites visited by its users at `window.ton`. This API allows websites to request users' TON accounts,
 read data from blockchains the user is connected to, and suggest that the user sign messages and transactions. The presence of the provider
 object indicates an TON user.
 
@@ -19,7 +19,7 @@ if (window.ton) {
 function onTonReady() {
   const provider = window.ton;
 
-  console.log('isTonMask=', provider.isTonMask);
+  console.log('isOpenMask=', provider.isOpenMask);
 
   startApp(provider); // initialize your app
 }
@@ -37,11 +37,11 @@ The provider API is all you need to create a full-featured web3 application.
 
 ## Properties
 
-### ton.isTonMask
+### ton.isOpenMask
 
-<Callout>This property is non-standard. Non-TonMask providers may also set this property to `true`.</Callout>
+<Callout>This property is non-standard. Non-OpenMask providers may also set this property to `true`.</Callout>
 
-`true` if the user has TonMask installed.
+`true` if the user has OpenMask installed.
 
 ## Methods
 
@@ -61,8 +61,8 @@ If the provider is not connected, the page will have to be reloaded in order for
 ton.isLocked(): Promise<boolean>;
 ```
 
-This method returns a `Promise` that resolves to a `boolean` indicating if TonMask is unlocked by the user.
-TonMask must be unlocked in order to perform any operation involving user accounts. Note that this method
+This method returns a `Promise` that resolves to a `boolean` indicating if OpenMask is unlocked by the user.
+OpenMask must be unlocked in order to perform any operation involving user accounts. Note that this method
 does not indicate if the user has exposed any accounts to the caller.
 
 ### ton.send(args)
@@ -71,17 +71,17 @@ does not indicate if the user has exposed any accounts to the caller.
 ton.send(method: string, params?: unknown[] | object): Promise<unknown>;
 ```
 
-Use request to submit RPC requests to TON via TonMask. It returns a Promise that resolves to the result of the RPC method call.
+Use request to submit RPC requests to TON via OpenMask. It returns a Promise that resolves to the result of the RPC method call.
 
 The params and return value will vary by RPC method. In practice, if a method has any params, they are almost always of type `Array<any>`.
 
 If the request fails for any reason, the Promise will reject with an `Error`.
 
-See the TonMask [RPC API documentation](/docs/api-reference/rpc-api) for details.
+See the OpenMask [RPC API documentation](/docs/api-reference/rpc-api) for details.
 
 ## Events
 
-The TonMask provider implements the [Node.js EventEmitter](https://nodejs.org/api/events.html) API. This sections details the events emitted
+The OpenMask provider implements the [Node.js EventEmitter](https://nodejs.org/api/events.html) API. This sections details the events emitted
 via that API. There are innumerable `EventEmitter` guides elsewhere, but you can listen for events like this:
 
 ```js
@@ -121,7 +121,7 @@ function which has passed to ethereum.on for the event name mentioned in the fir
 ton.on('accountsChanged', handler: (accounts: Array<string>) => void);
 ```
 
-The TonMask provider emits this event whenever the return value of the `ton_requestAccounts` RPC method changes.
+The OpenMask provider emits this event whenever the return value of the `ton_requestAccounts` RPC method changes.
 `ton_requestAccounts` returns an array that is either empty or contains a single account address. The returned address,
 if any, is the address of the most recently used account that the caller is permitted to access. Callers are identified
 by their URL origin, which means that all sites with the same origin share the same permissions.
@@ -134,7 +134,7 @@ This means that `accountsChanged` will be emitted whenever the user's exposed ac
 ton.on('chainChanged', handler: (chainId: string) => void);
 ```
 
-The TonMask provider emits this event when the currently connected network changes.
+The OpenMask provider emits this event when the currently connected network changes.
 
 All RPC requests are submitted to the currently connected chain. Therefore, it's critical to
 keep track of the current network by listening for this event.

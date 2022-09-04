@@ -1,0 +1,36 @@
+import Network from 'components/example/network'
+
+# Switch Network
+
+## Get network value and subscribe to changing
+
+```jsx
+export default () => {
+  const [network, setNetwork] = useState("");
+
+  useEffect(() => {
+    const provider = window.ton;
+    if (!provider.isOpenMask) return;
+
+    // Initial chainId value
+    provider.send("ton_getChain").then((chainId) => setNetwork(chainId));
+
+    // Subscribe to change network
+    provider.on("chainChanged", setNetwork);
+    return () => {
+      // Unsubscribe
+      provider.off("chainChanged", setNetwork);
+    };
+  }, []);
+
+  return (
+    <div>
+      <div>{network ?? "OpenMask not detected"}</div>
+    </div>
+  );
+};
+```
+
+Please try to change netwrok in your OpenMask extesion:
+
+<Network />

@@ -11,7 +11,7 @@ export default () => {
     setSent(false);
     setConfirm(false);
 
-    console.log("isTonMask=", provider.isTonMask);
+    console.log("isOpenMask=", provider.isOpenMask);
     setDisabled(true);
     try {
       await provider.send("ton_requestAccounts");
@@ -36,7 +36,7 @@ export default () => {
   return (
     <div className="py-8">
       <div className="pb-4">
-        Official TonMask donate address:
+        OpenMask donate address:
         "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
       </div>
       <button

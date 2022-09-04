@@ -8,7 +8,7 @@ export default () => {
   const connect = async () => {
     const provider = window.ton;
 
-    console.log("isTonMask=", provider.isTonMask);
+    console.log("isOpenMask=", provider.isOpenMask);
     try {
       const accounts = await provider.send("ton_requestAccounts");
       const account = accounts[0];
@@ -27,7 +27,7 @@ export default () => {
         onClick={connect}
         className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
       >
-        Connect TonMask
+        Connect OpenMask
       </button>
       {address && (
         <Callout emoji="✅">
