@@ -9,48 +9,6 @@ The API is based on an interface exposed by all TON clients, along with a growin
 
 ## Methods
 
-### ton_getLocked
-
-#### Returns
-
-`boolean` - is wallet locked
-
-#### Description
-
-This method is indicating if OpenMask is unlocked by the user.
-OpenMask must be unlocked in order to perform any operation involving user accounts. Note that this method
-does not indicate if the user has exposed any accounts to the caller.
-
-#### Example
-
-```js
-ton.send("ton_getLocked")
-    .then(locked => console.log({ locked }))
-    .catch((error) => {
-        console.error(error);
-    });
-```
-
-### ton_getChain
-
-#### Returns
-
-`string` - the network name
-
-#### Description
-
-Chain id string representing the current blockchain's network ID.
-
-#### Example
-
-```js
-ton.send("ton_getChain")
-    .then(chainId => console.log({ chainId }))
-    .catch((error) => {
-        console.error(error);
-    });
-```
-
 ### ton_requestAccounts
 
 #### Returns
@@ -107,7 +65,7 @@ ton.send("ton_getBalance")
         console.error(error);
     });
 
-ton.send("ton_getBalance", ["EQDdTENo4SOc3ax3f86RuWnfLz5Sablz3fsyGvCA5uq3eUPG"])
+ton.send("ton_getBalance", "EQDdTENo4SOc3ax3f86RuWnfLz5Sablz3fsyGvCA5uq3eUPG")
     .then(handleBalance)
     .catch((error) => {
         console.error(error);
@@ -147,11 +105,11 @@ Learn more about [Seqno-based wallets](https://ton.org/docs/#/howto/payment-proc
 #### Example
 
 ```js
-const seqNo = await provider.send("ton_sendTransaction", [{
+const seqNo = await provider.send("ton_sendTransaction", {
     to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
     value: "100000000",
     data: "Comment",
-}]);
+});
 ```
 
 ### ton_confirmWalletSeqNo
@@ -167,5 +125,43 @@ Returns a `Promise` that resolves when the wallet sequence number would be more 
 #### Example
 
 ```js
-await provider.send("ton_confirmWalletSeqNo", [seqNo]);
+await provider.send("ton_confirmWalletSeqNo", seqNo);
 ```
+
+### wallet_getChain
+
+#### Returns
+
+`string` - the network name, for example `mainnet` or `testnet`
+
+#### Description
+
+Chain id string representing the current blockchain's network ID.
+
+#### Example
+
+```js
+ton.send("ton_getChain")
+    .then(chainId => console.log({ chainId }))
+    .catch((error) => {
+        console.error(error);
+    });
+```
+
+### wallet_switchChain
+
+#### Parameters
+
+`string` - the chainId, for example `mainnet` or `testnet`
+
+#### Returns
+
+Returns a `Promise` that resolves when the wallet change the network.
+
+#### Example
+
+```js
+await provider.send("wallet_switchChain", "mainnet");
+```
+
+Learn [example how to change the network](/docs/network).

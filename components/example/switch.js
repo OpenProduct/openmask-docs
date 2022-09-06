@@ -23,7 +23,7 @@ export default () => {
     if (!provider?.isOpenMask) return;
 
     // Initial chainId value
-    provider.send("ton_getChain").then((chainId) => setNetwork(chainId));
+    provider.send("wallet_getChain").then((chainId) => setNetwork(chainId));
   }, []);
 
   return (
