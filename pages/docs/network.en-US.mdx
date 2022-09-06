@@ -1,4 +1,5 @@
 import Network from 'components/example/network'
+import Switch from 'components/example/switch'
 
 # Switch Network
 
@@ -9,7 +10,7 @@ export default () => {
   const [network, setNetwork] = useState("");
 
   useEffect(() => {
-    const provider = window.ton;
+    const provider = window.ton ?? {};
     if (!provider.isOpenMask) return;
 
     // Initial chainId value
@@ -34,3 +35,45 @@ export default () => {
 Please try to change netwrok in your OpenMask extesion:
 
 <Network />
+
+## Ask to change network from dApp
+
+```jsx
+export default () => {
+  const [network, setNetwork] = useState("");
+
+  const switchNetwork = async () => {
+    const provider = window.ton ?? {};
+    if (!provider?.isOpenMask) return;
+
+    const next = network === "mainnet" ? "testnet" : "mainnet";
+    try {
+      await provider.send("wallet_switchChain", next);
+
+      setNetwork(next);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    const provider = window.ton ?? {};
+    if (!provider?.isOpenMask) return;
+
+    // Initial chainId value
+    provider.send("ton_getChain").then((chainId) => setNetwork(chainId));
+  }, []);
+
+  return (
+    <div>
+      <button onClick={switchNetwork}>
+        Switch network
+      </button>
+      <div>{network ?? "OpenMask not detected"}</div>
+    </div>
+  );
+};
+
+```
+
+<Switch />
