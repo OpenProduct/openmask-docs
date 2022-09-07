@@ -1,0 +1,39 @@
+# Wallet Permissions
+
+## Introduction
+
+OpenMask builded on a last stack and implement the latest version of chorme manifest version 3.
+The major different with manifest version 2 that service worker no longer could persistens.
+In manifest 2 the developers could run persistent worker and store critical and sesnsitive information in memeory store, most secure store.
+For example MetaMask store password in this way. All wallet keys are encrypred and to decrypt the application have to know password.
+
+Google announced manifest version 3 where remove this option to run persistent worker in background
+and announced stopping supportin application with use manifest version 2 in 2023.
+With manifest version 3 developers could implement only an interruptible service worker.
+
+The application background script would be aborted after 5 minutes of inactivity. The application no longer store password from wallet in a memeory store.
+To not ask wallet users password every 5 minutes, OpenMask implement different core permissions to read information from wallet.
+The application allow to user chose permissions options to allow or disallow dApp read infomation from locked wallet.
+
+## Core Permissions
+
+The wallet save permission for every dApp during first `ton_requestAccounts` request.
+On first connection the owner would see a notification and have to select wallet account to open and permissions list to confirm it.
+
+### Base Permission
+
+`Bese` permission allow to see address, account balance, activity for unlocked wallet.
+When user would return to dApp and try to create connection with wallet by `ton_requestAccounts` request, he would see a notification to unlock wallet.
+
+### Locked Permission
+
+`Locked` permission allow to see address, account balance, activity for locked wallet.
+When user would return to dApp the dApp could automaticely create a commection and reseave information by `ton_requestAccounts` request.
+
+For both `Base` and `Locked` permission dApp could suggest transaction, to confirm transaction the owner have to unlock wallet.
+
+## Additional Permissions
+
+## Network Permission
+
+`Network` permission allow dApp to swith wallet network without confirmation notification.

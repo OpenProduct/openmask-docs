@@ -1,6 +1,7 @@
 {
   "introduction": "Introduction",
   "getting-started": "Getting Started",
+  "permissions": "Wallet Permissions",
   "sending-transactions": "Sending Transactions",
   "network": "Switch Network",
   "advanced-connect": "Advanced Connect",
