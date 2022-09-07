@@ -18,7 +18,7 @@ export default () => {
 
       const seqNo = await provider.send("ton_sendTransaction", [
         {
-          to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+          to: "EQCV4FC_GjwyRDx4RAfI9-f1z3Tfi6JBxEOHol8SUpI2xTxT",
           value: "100000000",
           data: "Donate",
         },
@@ -37,7 +37,7 @@ export default () => {
     <div className="py-8">
       <div className="pb-4">
         OpenMask donate address:
-        "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
+        "EQCV4FC_GjwyRDx4RAfI9-f1z3Tfi6JBxEOHol8SUpI2xTxT"
       </div>
       <button
         disabled={disabled}

@@ -1,0 +1,147 @@
+import Connect from 'components/example/advanced-connect'
+import Callout from 'nextra-theme-docs/callout'
+
+# Advance connecting to OpenMask
+
+<Callout>This guide assumes intermediate knowledge of React.js</Callout>
+
+### Network
+
+Step one, always check network before enter user to dApp, and ask to switch network if the users wallet use different network.
+Also in case if your change network in time useing dApp, the applcation would show swith to correct network screen.
+
+The component use [`Connect` component](#connect).
+
+```jsx
+export default () => {
+  const [network, setNetwork] = useState("");
+
+  const switchNetwork = async () => {
+    const provider = window.ton ?? {};
+    if (!provider?.isOpenMask) return;
+
+    try {
+      await provider.send("wallet_switchChain", "mainnet");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    const provider = window.ton ?? {};
+    if (!provider?.isOpenMask) return;
+
+    // Initial chainId value
+    provider.send("wallet_getChain").then((chainId) => setNetwork(chainId));
+
+    // Subscribe to change network
+    provider.on("chainChanged", setNetwork);
+    return () => {
+      // Unsubscribe
+      provider.off("chainChanged", setNetwork);
+    };
+  }, []);
+
+  if (network != "mainnet") {
+    return (
+      <div>
+        <button onClick={switchNetwork}>
+          Switch to Mainnet
+        </button>
+      </div>
+    );
+  }
+
+  return <Connect />;
+};
+
+```
+
+### Connect
+
+Step two, examble of connect button, with remeber user feature to automatically connect to account when user would return to dApp.
+
+The `Connect` component use [`Balance` component](#balance).
+
+```jsx
+const Connect = () => {
+  const [address, setAddress] = useState("");
+
+  const connect = async () => {
+    const provider = window.ton;
+
+    try {
+      const accounts = await provider.send("ton_requestAccounts");
+      const account = accounts[0];
+      setAddress(account);
+
+      // Store account to user local storage to know
+      // that yout dApp already have and access
+      localStorage.setItem("OpenMask", account);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    // After  initialize dApp
+    // check if your dApp had an access to wallet and run auto-connect
+    const account = localStorage.getItem("OpenMask");
+    if (!account) return;
+
+    connect();
+  }, []);
+
+  return (
+    <div>
+      <button onClick={connect}>
+        Connect OpenMask
+      </button>
+      {address && (
+        <div>{address}<br /><Balance /></div>
+      )}
+    </div>
+  );
+};
+```
+
+### Balance
+
+Step tree, example of `Balance` component with disapay wallet balance and subscribe to changes.
+
+Please note that these numbers often used in TON are far higher precision than native JavaScript numbers,
+and can cause unpredictable behavior if not anticipated. For this reason, we highly recommend using [BN.js](https://github.com/indutny/bn.js/) or [ethjs-unit](https://github.com/ethjs/ethjs-unit)
+when manipulating values intended for the blockchain.
+
+```jsx
+const Balance = () => {
+  const [balance, setBalance] = useState("");
+
+  const updateBalance = useCallback(async () => {
+    const provider = window.ton;
+
+    try {
+      const balance = await provider.send("ton_getBalance");
+      setBalance(String(Number(balance) / 1000000000));
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    updateBalance();
+
+    const provider = window.ton;
+    // Subscribe to change account event to update user balance
+    provider.on("accountsChanged", updateBalance);
+    return () => {
+      // Unsubscribe
+      provider.off("accountsChanged", updateBalance);
+    };
+  }, [updateBalance]);
+
+  return <>{balance} TON</>;
+};
+```
+
+<Connect />

@@ -10,7 +10,7 @@ In OpenMask, using the `ton.send` method directly, sending a transaction will in
 
 ```js
 const params = {
-    to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+    to: "EQCV4FC_GjwyRDx4RAfI9-f1z3Tfi6JBxEOHol8SUpI2xTxT",
     value: "100000000",
     data: "Donate",
 }
@@ -37,7 +37,7 @@ export default () => {
       await provider.send("ton_requestAccounts");
 
       const seqNo = await provider.send("ton_sendTransaction", [{
-        to: "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991",
+        to: "EQCV4FC_GjwyRDx4RAfI9-f1z3Tfi6JBxEOHol8SUpI2xTxT",
         value: "100000000",
         data: "Donate",
       }]);
@@ -54,8 +54,8 @@ export default () => {
   return (
     <div>
       <div>
-        Official OpenMask donate address:
-        "UQDwLAVAK8Q2fRbYa-hHmiMb9mEE0psIwwyH-rsAkZx4h991"
+        OpenMask donate address:
+        "EQCV4FC_GjwyRDx4RAfI9-f1z3Tfi6JBxEOHol8SUpI2xTxT"
       </div>
       <button disabled={disabled} onClick={send}>
         Send 0.1 TON
