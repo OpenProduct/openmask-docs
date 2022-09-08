@@ -1,3 +1,5 @@
+import { Example3, Example4 } from 'components/example'
+
 # Wallet Permissions
 
 ## Introduction
@@ -20,6 +22,8 @@ However, OpenMask avoids asking users to fill in the password every 5 minutes.
 It was reached by different core permissions implementaion to read information from the wallet.
 The application provides an opportunity for the user to choose permissions options: allow or disallow dApp to read information from the locked wallet.
 
+<Example3 />
+
 ## Core Permissions
 
 The wallet save permission for every dApp during the first `ton_requestAccounts` request.
@@ -31,6 +35,8 @@ On the first connection, the owner sees a notification, and selects a wallet acc
 When the user would return to dApp and try to create a connection with the wallet by `ton_requestAccounts` request, he would see a notification to unlock the wallet.
 
 ### Locked
+
+<Example4 />
 
 `Locked` permission allows to see the address, account balance, and activity for the locked wallet.
 When the user would return to dApp the dApp could automatically create a connection and receive information by `ton_requestAccounts` request.
