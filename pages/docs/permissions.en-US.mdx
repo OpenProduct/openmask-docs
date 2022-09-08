@@ -2,38 +2,43 @@
 
 ## Introduction
 
-OpenMask builded on a last stack and implement the latest version of chorme manifest version 3.
-The major different with manifest version 2 that service worker no longer could persistens.
-In manifest 2 the developers could run persistent worker and store critical and sesnsitive information in memeory store, most secure store.
-For example MetaMask store password in this way. All wallet keys are encrypred and to decrypt the application have to know password.
+OpenMask is built on the last stack and implements the latest version of chrome applications manifest - version 3.
+The major difference with manifest 2 is that service worker could not be persistent anymore.
+For applications in manifest 2 developers can run persistent worker and store critical and sensitive information in the memory store, the most secure store.
 
-Google announced manifest version 3 where remove this option to run persistent worker in background
-and announced stopping supportin application with use manifest version 2 in 2023.
-With manifest version 3 developers could implement only an interruptible service worker.
+As an example MetaMask could be considered, it stores the password the way described. All wallet keys are encrypted and to decrypt the application has to know the password.
 
-The application background script would be aborted after 5 minutes of inactivity. The application no longer store password from wallet in a memeory store.
-To not ask wallet users password every 5 minutes, OpenMask implement different core permissions to read information from wallet.
-The application allow to user chose permissions options to allow or disallow dApp read infomation from locked wallet.
+Why the focus is on version 3, which recently Google announced?
+The main reason is that the option allows running the persistent worker in the background would be removed.
+Google is going to stop supporting applications built with manifest 2 in 2023.
+
+With manifest 3 developers can implement extensions with an interruptible service worker.
+The application background script would be aborted after 5 minutes of inactivity.
+The application no longer stores passwords from the wallet in a memory store.
+
+However, OpenMask avoids asking users to fill in the password every 5 minutes.
+It was reached by different core permissions implementaion to read information from the wallet.
+The application provides an opportunity for the user to choose permissions options: allow or disallow dApp to read information from the locked wallet.
 
 ## Core Permissions
 
-The wallet save permission for every dApp during first `ton_requestAccounts` request.
-On first connection the owner would see a notification and have to select wallet account to open and permissions list to confirm it.
+The wallet save permission for every dApp during the first `ton_requestAccounts` request.
+On the first connection, the owner sees a notification, and selects a wallet account to open and a permissions list to confirm it.
 
-### Base Permission
+### Base
 
-`Bese` permission allow to see address, account balance, activity for unlocked wallet.
-When user would return to dApp and try to create connection with wallet by `ton_requestAccounts` request, he would see a notification to unlock wallet.
+`Bese` permission allows seeing the address, account balance, and activity for the unlocked wallet.
+When the user would return to dApp and try to create a connection with the wallet by `ton_requestAccounts` request, he would see a notification to unlock the wallet.
 
-### Locked Permission
+### Locked
 
-`Locked` permission allow to see address, account balance, activity for locked wallet.
-When user would return to dApp the dApp could automaticely create a commection and reseave information by `ton_requestAccounts` request.
+`Locked` permission allows to see the address, account balance, and activity for the locked wallet.
+When the user would return to dApp the dApp could automatically create a connection and receive information by `ton_requestAccounts` request.
 
-For both `Base` and `Locked` permission dApp could suggest transaction, to confirm transaction the owner have to unlock wallet.
+For both `Base` and `Locked` permission dApp could suggest a transaction. To confirm the transaction the owner have to unlock the wallet.
 
 ## Additional Permissions
 
-## Network Permission
+## Network
 
-`Network` permission allow dApp to swith wallet network without confirmation notification.
+`Network` permission allows dApp to switch wallet network without confirmation notification.
