@@ -2,6 +2,18 @@ import { useRouter } from "next/router";
 
 const Logo = () => <img width="45" src="/tonmask-logo.svg" />;
 
+const Title = ({ children }) => {
+  return <h4 className="mb-2 font-bold uppercase">{children}</h4>;
+};
+
+const Link = ({ children, href, target }) => (
+  <div>
+    <a href={href} target={target} rel="noopener">
+      {children}
+    </a>
+  </div>
+);
+
 const TITLE_WITH_TRANSLATIONS = {
   "en-US": "A TON Wallet in your Browser",
 };
@@ -86,14 +98,45 @@ export default {
     switch (locale) {
       default:
         return (
-          <a
-            href="https://ton.org"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-1">Powered by TON</span>
-          </a>
+          <div>
+            <div className="flex w-full flex-col md:flex-row md:justify-between gap-4">
+              <div>
+                <Title>Learn more</Title>
+                <Link href="/docs/introduction">Documentation</Link>
+                <Link href="/blog">Blog</Link>
+              </div>
+              <div>
+                <Title>Get involved</Title>
+                <Link
+                  href="https://github.com/OpenProduct/openmask-extension"
+                  target="_blank"
+                >
+                  GitHub
+                </Link>
+              </div>
+              <div>
+                <Title>Connect</Title>
+                <Link href="https://t.me/openproduct" target="_blank">
+                  Telegram
+                </Link>
+              </div>
+              <div>
+                <Title>Legal</Title>
+                <Link href="/terms-and-conditions">Terms & Conditions</Link>
+              </div>
+            </div>
+            <div className="mt-4 text-xs">
+              @2022 OpenMask
+              <a
+                href="https://ton.org"
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center no-underline text-current"
+              >
+                <span className="ml-4">Powered by TON</span>
+              </a>
+            </div>
+          </div>
         );
     }
   },
