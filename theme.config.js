@@ -11,8 +11,8 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
 };
 
 export default {
-  projectLink: "https://github.com/TonMask/tonmask-extension",
-  docsRepositoryBase: "https://github.com/TonMask/tonmask-documentation",
+  projectLink: "https://github.com/OpenProduct/openmask-extension",
+  docsRepositoryBase: "https://github.com/OpenProduct/openmask-docs",
   titleSuffix: " – OpenMask",
   search: true,
   unstable_flexsearch: true,

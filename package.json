@@ -1,7 +1,7 @@
 {
   "name": "@OpenMask/docs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Website for OpenMask wallet",
   "main": "index.js",
   "scripts": {
     "dev": "next",
@@ -9,8 +9,7 @@
     "start": "next start",
     "build": "next build"
   },
-  "author": "Shu Ding",
-  "license": "Apache-2.0",
+  "author": "Nikita Kuznetsov",
   "dependencies": {
     "@reach/skip-nav": "^0.16.0",
     "focus-visible": "^5.1.0",
