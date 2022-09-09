@@ -14,5 +14,12 @@
     "theme": {
       "sidebar": false
     }
+  },
+  "terms-and-conditions": {
+    "title": "Terms & Conditions",
+    "type": "terms-and-conditions",
+    "theme": {
+      "sidebar": false
+    }
   }
 }
