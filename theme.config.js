@@ -54,12 +54,6 @@ export default {
       <>
         {/* Favicons, meta */}
         <link rel="icon" href="/tonmask-logo.svg" type="image/svg+xml" />
-        <link rel="manifest" href="/favicon/site.webmanifest" />
-        <link
-          rel="mask-icon"
-          href="/favicon/safari-pinned-tab.svg"
-          color="#000000"
-        />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta httpEquiv="Content-Language" content="en" />
         <meta
