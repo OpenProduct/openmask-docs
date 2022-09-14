@@ -77,7 +77,16 @@ The params and return value will vary by RPC method. In practice, if a method ha
 
 If the request fails for any reason, the Promise will reject with an `Error`.
 
-See the OpenMask [RPC API documentation](/docs/api-reference/rpc-api) for details.
+OpenMask Provider support 2 ways to pass parameters, there are both request would return the same result:
+
+```
+ton.send(method, param1, param2): Promise<unknown>;
+ton.send(method, [param1, param2]): Promise<unknown>;
+```
+
+The second way is implemented to be backward conpatible with `wallet.ton`.
+
+See the OpenMask [RPC API documentation](/docs/api-reference/rpc-api) for learn move about possible methods.
 
 ## Events
 
