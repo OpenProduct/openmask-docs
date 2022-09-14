@@ -102,8 +102,8 @@ export default {
             <div className="flex w-full flex-col md:flex-row md:justify-between gap-4">
               <div>
                 <Title>Learn more</Title>
-                <Link href="/docs/introduction">Documentation</Link>
                 <Link href="/blog">Blog</Link>
+                <Link href="/docs/introduction">Documentation</Link>
               </div>
               <div>
                 <Title>Get involved</Title>
