@@ -1,0 +1,18 @@
+.exampleImage {
+  width: 250px;
+  padding: 5px;
+  background: gray;
+}
+
+@media (max-width: 660px) {
+  .exampleImage {
+    width: 100%;
+  }
+}
+
+.exampleImage.left {
+  float: left;
+}
+.exampleImage.right {
+  float: right;
+}

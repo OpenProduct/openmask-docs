@@ -29,9 +29,10 @@
     font-size: 0.9rem;
   }
 }
+
 @media (max-width: 660px) {
   .features {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 370px) {
