@@ -79,7 +79,7 @@ If the request fails for any reason, the Promise will reject with an `Error`.
 
 OpenMask Provider support 2 ways to pass parameters, there are both request would return the same result:
 
-```
+```js
 ton.send(method, param1, param2): Promise<unknown>;
 ton.send(method, [param1, param2]): Promise<unknown>;
 ```
