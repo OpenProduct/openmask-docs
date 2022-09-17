@@ -1,0 +1,17 @@
+import Jetton from 'components/example/jetton'
+
+# Jetton
+
+An RPC method for allowing users to easily track new assets with a suggestion from sites they are visiting.
+
+Web3 JavaScript wallet browsers may implement the `wallet_watchAsset` RPC method to allow any website to suggest a token for the user’s wallet to track.
+
+Today, one of the major uses of blockchain wallets is to acquire and track assets. Currently, each wallet either needs to pre-load a list of approved assets, or users need to be stepped through a tedious process of adding an asset for their given wallet.
+
+In the first case, wallets are burdened with both the security of managing this list, as well as the bandwidth of mass polling for known assets on their wallet.
+
+In the second case, the user experience is terrible.
+
+By leveraging a user’s existing trust with websites they are learning about assets on, we are able to decentralize the responsibility of managing a user’s list of known assets.
+
+<Jetton />
