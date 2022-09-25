@@ -4,7 +4,6 @@
   "permissions": "Wallet Permissions",
   "sending-transactions": "Sending Transactions",
   "network": "Switch Network",
-  "jettons": "Jettons",
-  "advanced-connect": "Advanced Connect",
-  "api-reference": "API Reference"
+  "api-reference": "API Reference",
+  "advanced": "Advanced"
 }

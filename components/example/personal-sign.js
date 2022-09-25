@@ -15,7 +15,7 @@ export default () => {
     const provider = window.ton;
     try {
       const signed = await provider.send("ton_personalSign", {
-        data: toHex("TON Signed Message:Hello world"),
+        data: "Hello world",
       });
 
       setData(signed);
