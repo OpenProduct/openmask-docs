@@ -116,7 +116,8 @@ const seqNo = await provider.send("ton_sendTransaction", {
 
 #### Parameters
 
-`number` - the wallet sequence number (seqno)
+1. `number` - the wallet sequence number (seqno)
+2. `string` - the wallet address (optional)
 
 #### Returns
 
@@ -125,7 +126,7 @@ Returns a `Promise` that resolves when the wallet sequence number would be more 
 #### Example
 
 ```js
-await provider.send("ton_confirmWalletSeqNo", seqNo);
+await provider.send("ton_confirmWalletSeqNo", seqNo, address);
 ```
 
 ### wallet_getChain
@@ -165,3 +166,87 @@ await provider.send("wallet_switchChain", "mainnet");
 ```
 
 Learn [example how to change the network](/docs/network).
+
+### wallet_watchAsset
+
+#### Parameters
+
+1. `object` - the asset parameters
+2. `string` - the wallet address (optional)
+
+```js
+interface JettonAssetParams {
+    type: "jetton",
+    // Jetton Minter Contract Address
+    address: string,
+    // Jettin name (optional)
+    name?: string,
+     // Jettin Symbol (optional)
+    symbol?: string,
+    // Jetton logo, url to image (optional)
+    image?: string,
+}
+```
+
+#### Returns
+
+Returns a `Promise` that resolves with a boolean value, with mean that coin was add or reject in the wallet.
+
+#### Example
+
+```js
+await provider.send("wallet_watchAsset", {
+    type: "jetton",
+    address: "EQBXHCDdBA6Vgd2zi-yRpFk8m04vn3ROWYU9GRZfpvrim1M5",
+});
+```
+
+Learn [example how to offer asset](/docs/advanced/jettons).
+
+### ton_rawSign
+
+1. `object` - the raw data parameters
+2. `string` - the wallet address (optional)
+
+```js
+interface RawSignParams {
+    // String payload data in hex format
+    data: string,
+}
+```
+
+#### Returns
+
+Returns a `Promise` that resolves with a `string` value, with is signatire for provided data.
+
+#### Example
+
+```js
+const signature = await provider.send("ton_rawSign", {
+    data: "48656c6c6f20776f726c64",
+});
+```
+
+### ton_personalSign
+
+1. `object` - the utf8 data parameters
+2. `string` - the wallet address (optional)
+
+```js
+interface PersonalSignParams {
+    // String payload data in utf8 format
+    data: string,
+}
+```
+
+#### Returns
+
+Returns a `Promise` that resolves with a `string` value, with is signatire for hexed data.
+
+#### Example
+
+```js
+const signature = await provider.send("ton_rawSign", {
+    data: "Hello world",
+});
+```
