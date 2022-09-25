@@ -21,5 +21,12 @@
     "theme": {
       "sidebar": false
     }
+  },
+  "test-dapp": {
+    "title": "E2E Test Dapp",
+    "type": "test-dapp",
+    "theme": {
+      "sidebar": false
+    }
   }
 }
