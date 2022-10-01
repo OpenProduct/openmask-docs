@@ -19,18 +19,18 @@ By leveraging a user’s existing trust with websites they are learning about as
 
 ## Jetton Example
 
-The example is the button with a show and allows to save TON Island coin from [tonis.land](https://tonis.land/) project in your OpenMask.
+The example is the button with a show and allows to save Wrapped SOL coin from [tonswap.org](https://tonswap.org/) project in your OpenMask.
 
 **Disclosure**: I/we have no stock, option or similar derivative position in any of the companies mentioned, and no plans to initiate any such positions within the next 72 hours. I wrote this article myself, and it expresses my own opinions. I am not receiving compensation for it. I have no business relationship with any company or projects whose stock is mentioned in this article.
 
 ```jsx
 export default () => {
-  const addIslandCoin = async () => {
+  const addWSOL = async () => {
     const provider = window.ton;
     try {
       await provider.send("wallet_watchAsset", {
         type: "jetton",
-        address: "EQBXHCDdBA6Vgd2zi-yRpFk8m04vn3ROWYU9GRZfpvrim1M5",
+        address: "EQC4cCygTZPKIP9cCsWx7DW5i5MQPOsEcfKkKwBZKkRCCfaW",
       });
     } catch (e) {
       console.error(e);
@@ -39,7 +39,7 @@ export default () => {
 
   return (
     <div>
-      <button onClick={addIslandCoin}>Watch TON Island Coin</button>
+      <button onClick={addWSOL}>Watch Wrapped SOL Coin</button>
     </div>
   );
 };

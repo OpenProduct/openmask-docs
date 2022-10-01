@@ -1,10 +1,10 @@
 export default () => {
-  const addIslandCoin = async () => {
+  const addWSOL = async () => {
     const provider = window.ton;
     try {
       await provider.send("wallet_watchAsset", {
         type: "jetton",
-        address: "EQBXHCDdBA6Vgd2zi-yRpFk8m04vn3ROWYU9GRZfpvrim1M5",
+        address: "EQC4cCygTZPKIP9cCsWx7DW5i5MQPOsEcfKkKwBZKkRCCfaW",
       });
     } catch (e) {
       console.error(e);
@@ -14,10 +14,10 @@ export default () => {
   return (
     <div className="py-8">
       <button
-        onClick={addIslandCoin}
+        onClick={addWSOL}
         className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
       >
-        Watch TON Island Coin
+        Watch Wrapped SOL Coin
       </button>
     </div>
   );
