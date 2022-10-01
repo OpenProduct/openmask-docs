@@ -246,7 +246,7 @@ Returns a `Promise` that resolves with a `string` value, with is signatire for h
 #### Example
 
 ```js
-const signature = await provider.send("ton_rawSign", {
+const signature = await provider.send("ton_personalSign", {
     data: "Hello world",
 });
 ```
