@@ -1,7 +1,62 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Callout from "nextra-theme-docs/callout";
-import { beginCell, Address } from "ton";
-import Buffer from "buffer";
+import { beginCell, Address, TonClient, TupleSlice } from "ton";
+import { useNetwork } from "./use-network";
+
+const CheckResult = ({ address }) => {
+  const network = useNetwork();
+
+  const [counter, setCounter] = useState("");
+  const [owner, setOwner] = useState("");
+
+  const client = useMemo(() => {
+    const endpoint =
+      network === "mainnet"
+        ? "https://toncenter.com/api/v2/jsonRPC/"
+        : "https://testnet.toncenter.com/api/v2/jsonRPC/";
+
+    // The client withour api key have a limitaion in 1 request set second,
+    // please don't click buttons to offten
+    return new TonClient({ endpoint });
+  }, [network]);
+
+  const getCounter = async () => {
+    const call = await client.callGetMethod(
+      Address.parseFriendly(address).address,
+      "counter"
+    );
+    const counter = new TupleSlice(call.stack).readBigNumber();
+    setCounter(counter.toString());
+  };
+
+  const getOwner = async () => {
+    const call = await client.callGetMethod(
+      Address.parseFriendly(address).address,
+      "counter"
+    );
+    const owner = new TupleSlice(call.stack).readNumericAddress(0);
+    setOwner(owner.toString());
+  };
+
+  return (
+    <>
+      <button
+        onClick={getCounter}
+        className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
+      >
+        Get Counter
+      </button>
+      {counter && <Callout>{counter}</Callout>}
+      <button
+        onClick={getOwner}
+        className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
+      >
+        Get contract owner
+      </button>
+      {owner && <Callout>{owner}</Callout>}
+    </>
+  );
+};
 
 const initCode =
   "b5ee9c72c1020f01000109000000000d00120017001c0023002800360040004e0053006c0071008701040114ff00f4a413f4bcf2c80b010201620902020120080302014805040009b59f10055002015807060017ad0c76a2687d20699f9818c0000faf607c13b79118400017bffecf6a2687d20699f981840202cd0b0a002dd7c13b7911829815f797033c1044c4b4050895b047800c0201480d0c00271c20063232c15400f3c5807e80b2dab25cfec02001f30cb434c0fe900c005c6c2456f83b51343e9034cfcc00f4c7f4cfcc4860840dd247cbeea7c408d7c0c069321633c5b2cff27b553808608411f550e46ea497c1780860841060da602ea7cc4cd9b1c17cb819807e800c007c01380060840b68e2abeea384d671c17cb819be900c00721633c5b2cff27b553817c1200e0006f2c065ea043d88";
@@ -44,9 +99,9 @@ export default () => {
         [
           {
             initCodeCell: initCode,
-            initDataCell: getInitData(address, 5),
+            initDataCell: getInitData(address, 55),
             initMessageCell: getInitMessage(),
-            amount: "0.05",
+            amount: "50000000", // 0.05 TON
           },
           address,
         ]
@@ -81,6 +136,8 @@ export default () => {
             : "Deploy Pending... ~15 sec"}
         </Callout>
       )}
+
+      {isConfirm && <CheckResult address={address} />}
     </div>
   );
 };
