@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Callout from "nextra-theme-docs/callout";
-import { beginCell, Address, TonClient, TupleSlice } from "ton";
+import { beginCell, Address } from "ton";
 import { useNetwork } from "./use-network";
+import { TonHttpProvider, parseAddress } from "@openmask/web-sdk/build/cjs";
 
 const CheckResult = ({ address }) => {
   const network = useNetwork();
@@ -10,50 +11,48 @@ const CheckResult = ({ address }) => {
   const [owner, setOwner] = useState("");
 
   const client = useMemo(() => {
-    const endpoint =
+    const host =
       network === "mainnet"
-        ? "https://toncenter.com/api/v2/jsonRPC/"
-        : "https://testnet.toncenter.com/api/v2/jsonRPC/";
+        ? "https://toncenter.com/api/v2/jsonRPC"
+        : "https://testnet.toncenter.com/api/v2/jsonRPC";
 
-    // The client withour api key have a limitaion in 1 request set second,
-    // please don't click buttons to offten
-    return new TonClient({ endpoint });
+    // The client without API key have a limitation in 1 request set second,
+    // please don't click buttons too often
+    return new TonHttpProvider(host);
   }, [network]);
 
   const getCounter = async () => {
-    const call = await client.callGetMethod(
-      Address.parseFriendly(address).address,
-      "counter"
-    );
-    const counter = new TupleSlice(call.stack).readBigNumber();
+    // it's a BN
+    const counter = await client.call2(address, "counter");
     setCounter(counter.toString());
   };
 
   const getOwner = async () => {
-    const call = await client.callGetMethod(
-      Address.parseFriendly(address).address,
-      "counter"
-    );
-    const owner = new TupleSlice(call.stack).readNumericAddress(0);
-    setOwner(owner.toString());
+    // it's a Cell
+    const result = await client.call2(address, "owner_address");
+    setOwner(parseAddress(result).toString(true, true, true));
   };
 
   return (
     <>
-      <button
-        onClick={getCounter}
-        className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
-      >
-        Get Counter
-      </button>
-      {counter && <Callout>{counter}</Callout>}
-      <button
-        onClick={getOwner}
-        className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
-      >
-        Get contract owner
-      </button>
-      {owner && <Callout>{owner}</Callout>}
+      <div className="my-5">
+        <button
+          onClick={getCounter}
+          className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
+        >
+          Get Counter
+        </button>
+        {counter && <Callout>{counter}</Callout>}
+      </div>
+      <div className="my-5">
+        <button
+          onClick={getOwner}
+          className="py-3 px-5 mb-3 bg-[#88d3ff] text-black text-lg"
+        >
+          Get contract owner
+        </button>
+        {owner && <Callout>{owner}</Callout>}
+      </div>
     </>
   );
 };
@@ -63,7 +62,7 @@ const initCode =
 
 const getInitData = (ownerAddress, counter) => {
   return beginCell()
-    .storeAddress(Address.parseFriendly(ownerAddress).address)
+    .storeAddress(Address.parse(ownerAddress))
     .storeUint(counter, 64)
     .endCell()
     .toBoc()
@@ -99,7 +98,7 @@ export default () => {
         [
           {
             initCodeCell: initCode,
-            initDataCell: getInitData(address, 55),
+            initDataCell: getInitData(address, 7),
             initMessageCell: getInitMessage(),
             amount: "50000000", // 0.05 TON
           },
@@ -120,6 +119,13 @@ export default () => {
     }
   };
 
+  useEffect(() => {
+    const contractAddress = localStorage.getItem("smart-contract-address");
+    if (contractAddress) {
+      setAddress(contractAddress);
+    }
+  }, []);
+
   return (
     <div className="py-8">
       <button
@@ -136,8 +142,11 @@ export default () => {
             : "Deploy Pending... ~15 sec"}
         </Callout>
       )}
+      {!isSent && address && (
+        <Callout emoji="🏗">Previously deployed contract: {address}</Callout>
+      )}
 
-      {isConfirm && <CheckResult address={address} />}
+      {address && <CheckResult address={address} />}
     </div>
   );
 };
