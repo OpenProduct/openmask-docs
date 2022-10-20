@@ -1,0 +1,279 @@
+---
+description: 'The tutorial how to deploy contracts to TON network. Describing examples how build Cell data and send it to blockchain.'
+date: October 21st, 2022
+---
+
+import Deploy from 'components/example/deploy-smart-contract'
+import Callout from "nextra-theme-docs/callout";
+import Authors, { Author } from 'components/authors'
+
+# Deploy TON Contract Tutorial
+
+<Authors date="October 21st, 2022">
+  <Author name="Nikita Kuznetov" link="https://github.com/KuznetsovNikita" />
+</Authors>
+
+<Callout>The tutorial can run in `mainnet` and `testnet` networks.<br />OpenMask team recommends using `testnet` for this tutorial.</Callout>
+
+For example, we deploy smart contracts from [tonstarter-contracts](https://github.com/ton-defi-org/tonstarter-contracts) template.
+The full source code you may find by this [link](https://github.com/ton-defi-org/tonstarter-contracts/blob/main/contracts/main.fc).
+
+### Overview
+
+The smart contract contains cell data with store `counter` and `owner_address` and contracts public methods to retrieve this data from a contract.
+All of this makes this contract suit well for this tutorial.
+
+```
+(slice, int) load_data() inline {
+  var ds = get_data().begin_parse();
+  return (
+    ds~load_msg_addr(), ;; owner_address
+    ds~load_uint(64)    ;; counter
+  );
+}
+
+---------------
+
+slice owner_address() method_id {
+  var (owner_address, _) = load_data();
+  return owner_address;
+}
+
+int counter() method_id {
+  var (_, counter) = load_data();
+  return counter;
+}
+```
+
+### Build smart contract
+
+To build this smart contract you may download the repository, install dependencies as notes in `README.md` and run the command `npm run build`.
+
+As a result in the file `build/main.compiled.json` you may find a build for this smart contract. If you don't touch the source in `main.fc` file it would be the same.
+
+```json
+{"hex":"b5ee9c72c1020f01000109000000000d00120017001c0023002800360040004e0053006c0071008701040114ff00f4a413f4bcf2c80b010201620902020120080302014805040009b59f10055002015807060017ad0c76a2687d20699f9818c0000faf607c13b79118400017bffecf6a2687d20699f981840202cd0b0a002dd7c13b7911829815f797033c1044c4b4050895b047800c0201480d0c00271c20063232c15400f3c5807e80b2dab25cfec02001f30cb434c0fe900c005c6c2456f83b51343e9034cfcc00f4c7f4cfcc4860840dd247cbeea7c408d7c0c069321633c5b2cff27b553808608411f550e46ea497c1780860841060da602ea7cc4cd9b1c17cb819807e800c007c01380060840b68e2abeea384d671c17cb819be900c00721633c5b2cff27b553817c1200e0006f2c065ea043d88"}
+```
+
+### Create initial data and message
+
+For deploying the process the contract developer if required has to provide initial data which would be stored in the smart contract cell and also the initial message with will be run with the deploy transaction.
+
+For this smart contract, initial data is a cell with initial `counter` and initial `owner_address` values.
+
+To build the initial data cell we could use our TON js client library - [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package.
+
+The following function will create a cell and store `address` and `int64` counter values and format it as a hexadecimal string.
+
+```js
+const getInitData = async (ownerAddress, counter) => {
+  const boc = await beginCell()
+    .storeAddress(new Address(ownerAddress))
+    .storeUint(counter, 64)
+    .endCell()
+    .toBoc();
+
+  return toHexString(boc);
+};
+```
+
+The following function will create an initial message with execute on the deploy transaction.
+The example contract handles a few different messages. This message would run the code with an increment counter and store the new value.
+
+```js
+const getInitMessage = async () => {
+  const boc = await beginCell()
+    .storeUint(0x37491f2f, 32)
+    .storeUint(0, 64)
+    .endCell()
+    .toBoc();
+
+  return toHexString(boc);
+};
+```
+
+The `toBoc` method of cell will return a promise that resolves with a `Unit8Array` value. After that we have convert this byte array to hexadecimal string value.
+We will use this simple function:
+
+```js
+const toHexString = (byteArray) => {
+  return Array.prototype.map
+    .call(byteArray, function (byte) {
+      return ("0" + (byte & 0xff).toString(16)).slice(-2);
+    })
+    .join("");
+};
+```
+
+### Combine code and send it to OpenMask
+
+`ton_deployContract` RPC method have paramters:
+
+```ts
+interface DeployParams {
+    // Smart contract code hexadecimal string
+    initCodeCell: string;
+    // Smart contract initial data hexadecimal string
+    initDataCell: string;
+    // Initial mesasge hexadecimal string (optional)
+    initMessageCell?: string;
+    // Amount to funding smart contract in nanotons, to pay network and storage fee
+    amount: string;
+}
+```
+
+And all together, the code will deploy a smart contract:
+
+```jsx
+import { useState } from "react";
+import { beginCell, Address } from "@openproduct/web-sdk/cjs";
+
+const initCode =
+  "b5ee9c72c1020f01000109000000000d00120017001c0023002800360040004e0053006c0071008701040114ff00f4a413f4bcf2c80b010201620902020120080302014805040009b59f10055002015807060017ad0c76a2687d20699f9818c0000faf607c13b79118400017bffecf6a2687d20699f981840202cd0b0a002dd7c13b7911829815f797033c1044c4b4050895b047800c0201480d0c00271c20063232c15400f3c5807e80b2dab25cfec02001f30cb434c0fe900c005c6c2456f83b51343e9034cfcc00f4c7f4cfcc4860840dd247cbeea7c408d7c0c069321633c5b2cff27b553808608411f550e46ea497c1780860841060da602ea7cc4cd9b1c17cb819807e800c007c01380060840b68e2abeea384d671c17cb819be900c00721633c5b2cff27b553817c1200e0006f2c065ea043d88";
+
+const toHexString = (byteArray) => {
+  return Array.prototype.map
+    .call(byteArray, function (byte) {
+      return ("0" + (byte & 0xff).toString(16)).slice(-2);
+    })
+    .join("");
+};
+
+const getInitData = async (ownerAddress, counter) => {
+  const boc = await beginCell()
+    .storeAddress(new Address(ownerAddress))
+    .storeUint(counter, 64)
+    .endCell()
+    .toBoc();
+
+  return toHexString(boc);
+};
+
+const getInitMessage = async () => {
+  const boc = await beginCell()
+    .storeUint(0x37491f2f, 32)
+    .storeUint(0, 64)
+    .endCell()
+    .toBoc();
+
+  return toHexString(boc);
+};
+
+export default () => {
+  const [disabled, setDisabled] = useState(false);
+  const [isSent, setSent] = useState(false);
+  const [isConfirm, setConfirm] = useState(false);
+  const [address, setAddress] = useState("");
+
+  const send = async () => {
+    const provider = window.ton;
+    setSent(false);
+    setConfirm(false);
+
+    setDisabled(true);
+    try {
+      const [ownerAddress] = await provider.send("ton_requestAccounts");
+
+      const { walletSeqNo, newContractAddress } = await provider.send(
+        "ton_deployContract",
+        [
+          {
+            initCodeCell: initCode,
+            initDataCell: await getInitData(ownerAddress, 10),
+            initMessageCell: await getInitMessage(),
+            amount: "50000000", // 0.05 TON
+          },
+          ownerAddress,
+        ]
+      );
+      setSent(true);
+      await provider.send("ton_confirmWalletSeqNo", [walletSeqNo, ownerAddress]);
+
+      setAddress(newContractAddress);
+      setConfirm(true);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setDisabled(false);
+    }
+  };
+
+  return (
+    <div>
+      <button disabled={disabled} onClick={send}>
+        Deploy Smart Contract
+      </button>
+      {isSent && (
+        <div>
+          {isConfirm
+            ? "Done. New contract address: " + address
+            : "Deploy Pending... ~15 sec"}
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
+## Finishing touch
+
+After deployment, we would like to test the smart contract that it works.
+You may use [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package to handle it. For example like this.
+
+```jsx
+import { useMemo, useState } from "react";
+import { TonHttpProvider, parseAddress } from "@openproduct/web-sdk/cjs";
+import { useNetwork } from "./use-network";
+
+const CheckResult = ({ address }) => {
+  const network = useNetwork();
+
+  const [counter, setCounter] = useState("");
+  const [owner, setOwner] = useState("");
+
+  const client = useMemo(() => {
+    const host =
+      network === "mainnet"
+        ? "https://toncenter.com/api/v2/jsonRPC"
+        : "https://testnet.toncenter.com/api/v2/jsonRPC";
+
+    // The client without API key have a limitation in 1 request set second,
+    // please don't click buttons too often
+    return new TonHttpProvider(host);
+  }, [network]);
+
+  const getCounter = async () => {
+    // it's a BN
+    const counter = await client.call2(address, "counter");
+    setCounter(counter.toString());
+  };
+
+  const getOwner = async () => {
+    // it's a Cell
+    const result = await client.call2(address, "owner_address");
+    setOwner(parseAddress(result).toString(true, true, true));
+  };
+
+  return (
+    <>
+      <button onClick={getCounter}>
+        Get Counter
+      </button>
+      {counter && <div>{counter}</div>}
+      <button onClick={getOwner}>
+        Get contract owner
+      </button>
+      {owner && <div>{owner}</div>}
+    </>
+  );
+};
+
+```
+
+<Deploy initCounter={10} />
+
+## Result
+
+For the counter, the correct value is `11`. The initial value is `10` and the initial transaction is `increment` with increment 10 and stored to contract cell.
+
+For the contract owner, it has to be your user-friendly bounceable wallet address.

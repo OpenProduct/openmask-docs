@@ -11,7 +11,7 @@
   },
   "author": "Nikita Kuznetsov",
   "dependencies": {
-    "@openmask/web-sdk": "github:OpenProduct/openmask-websdk",
+    "@openproduct/web-sdk": "^0.4.0",
     "@reach/skip-nav": "^0.16.0",
     "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
@@ -21,8 +21,7 @@
     "nextra-theme-docs": "^2.0.0-beta.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-intersection-observer": "^8.26.2",
-    "ton": "^12.1.3"
+    "react-intersection-observer": "^8.26.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
