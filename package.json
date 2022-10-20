@@ -1,5 +1,5 @@
 {
-  "name": "@OpenMask/docs",
+  "name": "@openmask/docs",
   "version": "1.0.0",
   "description": "Website for OpenMask wallet",
   "main": "index.js",
@@ -11,6 +11,7 @@
   },
   "author": "Nikita Kuznetsov",
   "dependencies": {
+    "@openproduct/web-sdk": "^0.4.0",
     "@reach/skip-nav": "^0.16.0",
     "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
