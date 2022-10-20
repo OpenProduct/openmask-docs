@@ -57,7 +57,7 @@ As a result in the file `build/main.compiled.json` you may find a build for this
 
 ### Create initial data and message
 
-For deploying the process the contract developer if required has to provide initial data which would be stored in the smart contract cell and also the initial message with will be run with the deploy transaction.
+For deploying the process the contract developer has to provide initial data which would be stored in the smart contract cell and also the initial message with will be run with the deploy transaction.
 
 For this smart contract, initial data is a cell with initial `counter` and initial `owner_address` values.
 
@@ -273,6 +273,8 @@ const CheckResult = ({ address }) => {
 <Deploy initCounter={10} />
 
 ## Result
+
+My congratulation! You just deployed your smart contract to TON network.
 
 For the counter, the correct value is `11`. The initial value is `10` and the initial transaction is `increment` with increment 10 and stored to contract cell.
 
