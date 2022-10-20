@@ -171,7 +171,7 @@ Learn [example how to change the network](/docs/network).
 
 #### Parameters
 
-1. `object` - the asset parameters
+1. `object` - the asset parameters one of `JettonAssetParams` or `NftAssetParams`
 2. `string` - the wallet address (optional)
 
 ```js
@@ -185,6 +185,12 @@ interface JettonAssetParams {
     symbol?: string,
     // Jetton logo, url to image (optional)
     image?: string,
+}
+
+interface NftAssetParams {
+    type: "nft",
+    // NFT Contract Address
+    address: string,
 }
 ```
 
@@ -250,3 +256,42 @@ const signature = await provider.send("ton_personalSign", {
     data: "Hello world",
 });
 ```
+
+### ton_deployContract
+
+#### Parameters
+
+1. `object` - the contract parameters
+2. `string` - the wallet address (optional)
+
+```js
+interface DeployParams {
+    // Smart contract code hexadecimal string
+    initCodeCell: string;
+    // Smart contract initial data hexadecimal string
+    initDataCell: string;
+    // Initial mesasge hexadecimal string (optional)
+    initMessageCell?: string;
+    // Amount to funding smart contract in nanotons, to pay network and storage fee
+    amount: string;
+}
+```
+
+#### Returns
+
+Returns a `Promise` that resolves with a `object` value.
+
+```js
+interface DeployOutput {
+    // SeqNo for wallet with run contract deployment
+    walletSeqNo: number;
+    // Address for newly deployed contract
+    newContractAddress: string;
+}
+```
+
+#### Example
+
+Please [read more](/blog/deploy-contract-tutorial) about the example in the blog post.
+You may find information how to build contract code `initCodeCell` and generate `initDataCell` or `initMessageCell`.
+As well as send message to blockchain and verify result.
