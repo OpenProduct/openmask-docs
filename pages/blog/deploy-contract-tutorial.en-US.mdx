@@ -13,15 +13,15 @@ import Authors, { Author } from 'components/authors'
   <Author name="Nikita Kuznetov" link="https://github.com/KuznetsovNikita" />
 </Authors>
 
-<Callout>The tutorial can run in `mainnet` and `testnet` networks.<br />OpenMask team recommends using `testnet` for this tutorial.</Callout>
+<Callout>The tutorial can be run in `mainnet` and `testnet` networks.<br />OpenMask team recommends to use `testnet` for this tutorial.</Callout>
 
-For example, we deploy smart contracts from [tonstarter-contracts](https://github.com/ton-defi-org/tonstarter-contracts) template.
-The full source code you may find by this [link](https://github.com/ton-defi-org/tonstarter-contracts/blob/main/contracts/main.fc).
+For example, you deploy smart contracts from [tonstarter-contracts](https://github.com/ton-defi-org/tonstarter-contracts) template.
+The full source code available via link [link](https://github.com/ton-defi-org/tonstarter-contracts/blob/main/contracts/main.fc).
 
-### Overview
+## Overview
 
 The smart contract contains cell data with store `counter` and `owner_address` and contracts public methods to retrieve this data from a contract.
-All of this makes this contract suit well for this tutorial.
+These make the contract suitable for this tutorial.
 
 ```
 (slice, int) load_data() inline {
@@ -45,7 +45,7 @@ int counter() method_id {
 }
 ```
 
-### Build smart contract
+## Build smart contract
 
 To build this smart contract you may download the repository, install dependencies as notes in `README.md` and run the command `npm run build`.
 
@@ -55,15 +55,15 @@ As a result in the file `build/main.compiled.json` you may find a build for this
 {"hex":"b5ee9c72c1020f01000109000000000d00120017001c0023002800360040004e0053006c0071008701040114ff00f4a413f4bcf2c80b010201620902020120080302014805040009b59f10055002015807060017ad0c76a2687d20699f9818c0000faf607c13b79118400017bffecf6a2687d20699f981840202cd0b0a002dd7c13b7911829815f797033c1044c4b4050895b047800c0201480d0c00271c20063232c15400f3c5807e80b2dab25cfec02001f30cb434c0fe900c005c6c2456f83b51343e9034cfcc00f4c7f4cfcc4860840dd247cbeea7c408d7c0c069321633c5b2cff27b553808608411f550e46ea497c1780860841060da602ea7cc4cd9b1c17cb819807e800c007c01380060840b68e2abeea384d671c17cb819be900c00721633c5b2cff27b553817c1200e0006f2c065ea043d88"}
 ```
 
-### Create initial data and message
+## Create initial data and message
 
-For deploying the process the contract developer has to provide initial data which would be stored in the smart contract cell and also the initial message with will be run with the deploy transaction.
+For contract deploying developer has to provide initial data. It would be stored in the smart contract cell. The second step for developer is to provide the initial message which will be run with the deploy transaction.
 
-For this smart contract, initial data is a cell with initial `counter` and initial `owner_address` values.
+For this smart contract initial data is a cell with initial `counter` and initial `owner_address` values.
 
-To build the initial data cell we could use our TON js client library - [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package.
+To build the initial data cell you can use our TON js client library - [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package.
 
-The following function will create a cell and store `address` and `int64` counter values and format it as a hexadecimal string.
+The following function creates a cell and store `address` and `int64` counter values and format it to a hexadecimal string.
 
 ```js
 const getInitData = async (ownerAddress, counter) => {
@@ -77,8 +77,8 @@ const getInitData = async (ownerAddress, counter) => {
 };
 ```
 
-The following function will create an initial message with execute on the deploy transaction.
-The example contract handles a few different messages. This message would run the code with an increment counter and store the new value.
+The following function creates an initial message. The message executes together with the deploy transaction, rirht after initialization.
+The example contract handles a few different messages. This message runs the code with an increment counter and stores the new value.
 
 ```js
 const getInitMessage = async () => {
@@ -93,7 +93,7 @@ const getInitMessage = async () => {
 ```
 
 The `toBoc` method of cell will return a promise that resolves with a `Unit8Array` value. After that we have convert this byte array to hexadecimal string value.
-We will use this simple function:
+We use this simple function:
 
 ```js
 const toHexString = (byteArray) => {
@@ -105,7 +105,7 @@ const toHexString = (byteArray) => {
 };
 ```
 
-### Combine code and send it to OpenMask
+## Combine code and send it to OpenMask
 
 `ton_deployContract` RPC method have paramters:
 
@@ -217,8 +217,8 @@ export default () => {
 
 ## Finishing touch
 
-After deployment, we would like to test the smart contract that it works.
-You may use [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package to handle it. For example like this.
+To check smrt conract is working properly after deployment you may use [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package.
+For example:
 
 ```jsx
 import { useMemo, useState } from "react";
@@ -274,8 +274,8 @@ const CheckResult = ({ address }) => {
 
 ## Result
 
-My congratulation! You just deployed your smart contract to TON network.
+Congratulations! You've just deployed a smart contract to TON network.
 
-For the counter, the correct value is `11`. The initial value is `10` and the initial transaction is `increment` with increment 10 and stored to contract cell.
+For the counter the correct value is `11`. The initial value is `10` and the initial transaction is `increment` with increment 10 and stored to contract cell.
 
-For the contract owner, it has to be your user-friendly bounceable wallet address.
+For the contract owner it has to be your user-friendly bounceable wallet address.

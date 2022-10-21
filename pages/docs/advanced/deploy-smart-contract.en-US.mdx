@@ -7,11 +7,11 @@ import Callout from "nextra-theme-docs/callout";
 
 An RPC method for allowing users to deploy a new smart contract to TON network. `ton_deployContract` RPC method allow to do it.
 
-This use case can be used in a variety of ways. DApp developers may offer to wallet owners to deploy their personal contracts.
-It may be a useful feature in allowing the to owner store and get information in the contract.
-Or it may be an option to deploy an NFT contract, to reward users after completing a tutorial or course.
+This use case apllied in a few different ways. DApp developers may offer to wallet owners to deploy their personal contracts.
+It's a useful feature allowing owners to store and get information in the contract.
+Or it can be an option to deploy an NFT contract to reward users after completing a tutorial or course.
 
-### Deploy Parameters
+## Deploy Parameters
 
 ```ts
 interface DeployParams {
@@ -26,7 +26,7 @@ interface DeployParams {
 }
 ```
 
-### Example
+## Example
 
 Please [read more](/blog/deploy-contract-tutorial) about the example in the blog post.
 You may find information how to build contract code `initCodeCell` and generate `initDataCell` or `initMessageCell`.
@@ -126,6 +126,6 @@ export default () => {
 
 ## Result
 
-For the counter, the correct value is `8`. The initial value is `7` and the initial transaction is `increment` with increment 7 and stored to contract cell.
+For the counter the correct value is `8`. The initial value is `7` and the initial transaction is `increment` with increment 7 and stored to contract cell.
 
-For the contract owner, it has to be your user-friendly bounceable wallet address.
+For the contract owner it has to be your user-friendly bounceable wallet address.
