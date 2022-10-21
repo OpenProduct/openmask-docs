@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@openproduct/web-sdk': ^0.4.0
+  '@openproduct/web-sdk': ^0.5.0
   '@reach/skip-nav': ^0.16.0
   autoprefixer: ^10.4.2
   focus-visible: ^5.1.0
@@ -17,7 +17,7 @@ specifiers:
   tailwindcss: ^3.0.16
 
 dependencies:
-  '@openproduct/web-sdk': 0.4.0
+  '@openproduct/web-sdk': 0.5.0
   '@reach/skip-nav': 0.16.0_sfoxds7t5ydpegc3knd667wn6m
   focus-visible: 5.2.0
   intersection-observer: 0.10.0
@@ -367,8 +367,8 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@openproduct/web-sdk/0.4.0:
-    resolution: {integrity: sha512-lLwTW0IqMMmOF4eNO6XLVlA5Jpz/b1Q7cBays1eea9wWBH5g3nkjC0btZWPob4gCIQ+a0TC6Qs9ODmNMl9vGVw==}
+  /@openproduct/web-sdk/0.5.0:
+    resolution: {integrity: sha512-VJWNWy+1lexKfmpdZNqc5FyZYv36efu4nqKnsNaWUPKAkHSx6b0QhlFIJPpqOKXgpueZ3r7bbOgEfcyI6+01ug==}
     dependencies:
       bn.js: 4.11.6
       ethjs-unit: 0.1.6
