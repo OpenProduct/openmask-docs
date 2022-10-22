@@ -13,9 +13,9 @@ import Authors, { Author } from 'components/authors'
   <Author name="Nikita Kuznetov" link="https://github.com/KuznetsovNikita" />
 </Authors>
 
-In this tutorial, you deploy a single smart contract in one of TON networks. You have the option to run and review the implementation of the code with interact with the contract via web API.
+In this tutorial, you deploy a single smart contract in one of TON networks. You have the option to run and review the implementation of the code with interaction with the contract via web API.
 
-This tutorial's steps are presented from a dApp developer perspective. You can complete most of these steps on a local machine running Linux, macOS, or Unix.
+This tutorial's steps are presented from a dApp developer perspective. You review the smart contract on the FunC language and React components for interaction with the blockchain. You can complete most of these steps on a local machine or create a dApp with the same features.
 
 <Callout>The tutorial can be run in `mainnet` and `testnet` networks.<br />OpenMask team recommends to use `testnet` for this tutorial.</Callout>
 
@@ -79,7 +79,7 @@ const getInitData = async (ownerAddress, counter) => {
 };
 ```
 
-The following function creates an initial message. The message executes together with the deploy transaction, rirht after initialization.
+The following function creates an initial message. The message executes together with the deploy transaction, right after initialization.
 The example contract handles a few different messages. This message runs the code with an increment counter and stores the new value.
 
 ```js
@@ -194,8 +194,36 @@ export default () => {
 
 ## Finishing touch
 
-To check smrt conract is working properly after deployment you may use [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package.
-For example:
+To check smart conract is working properly after deployment you may use [@openproduct/web-sdk](https://www.npmjs.com/package/@openproduct/web-sdk) package.
+
+The simple way to communicate with TON it's using an SDK and public API. SDK provides developers-friendly methods to read blockchain entries, and service functions to analyze and parse this data.
+
+```js
+import { TonHttpProvider } from "@openproduct/web-sdk/cjs";
+
+const host =
+  network === "mainnet"
+    ? "https://toncenter.com/api/v2/jsonRPC"
+    : "https://testnet.toncenter.com/api/v2/jsonRPC";
+
+const client = new TonHttpProvider(host);
+```
+
+The `client` has a method `call2` to allow call a contract public functions and parse the result from blockchain entries to valuable web entries.
+
+```js
+import { parseAddress } from "@openproduct/web-sdk/cjs";
+
+// it's a BN
+const counter = await client.call2(address, "counter");
+console.log(counter.toString())
+
+// it's a Cell
+const result = await client.call2(address, "owner_address");
+console.log(parseAddress(result).toString(true, true, true));
+```
+
+All code together a react component calls contract and shows the results in a web application:
 
 ```jsx
 import { useMemo, useState } from "react";
@@ -258,3 +286,6 @@ For the counter the correct value is `11`. The initial value is `10` and the ini
 For the contract owner it has to be your user-friendly bounceable wallet address.
 
 Please leave a comment in our [telegram channel](https://t.me/openproduct) with your contract address, than we know it useful for you!
+
+[The source code of this buttons above](https://github.com/OpenProduct/openmask-docs/blob/main/components/example/deploy-smart-contract.js) you may find in our GinHub.
+You may find more integration examples from our [developer's documentation](/docs/getting-started) in [this GitHub folder](https://github.com/OpenProduct/openmask-docs/tree/main/components/example).
