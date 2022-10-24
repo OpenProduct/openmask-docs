@@ -82,7 +82,9 @@ interface TransactionParams {
     value: string;
     // Destination address
     to: string;
-    // Additional data (comment) (optional)
+    // Type of Additional data (optional)
+    dataType?: "hex" | "base64" | "boc" | undefined;
+    // Additional data (optional)
     data?: string;
 }
 ```
