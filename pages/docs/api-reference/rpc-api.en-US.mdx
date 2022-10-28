@@ -40,6 +40,46 @@ function connect() {
 }
 ```
 
+### ton_requestWallets
+
+#### Returns
+
+`object[]` - An array of objects with wallet TON address, version and publicKey.
+
+```js
+interface RequestWalletsOutput {
+    address: string;
+    publicKey: string;
+    version:  "v2R1" | "v2R2" | "v3R1" | "v3R2" | "v4R1" | "v4R2";
+}
+```
+
+#### Description
+
+The method is equivalent to `ton_requestAccounts` but returns extra information about wallets.
+The method may be useful if the wallet is not deploy in the network and it is umpossible to load the public key from the web.
+
+#### Example
+
+```js
+document.getElementById('connectButton', connect);
+
+function connect() {
+  ton
+    .send("ton_requestWallets")
+    .then(console.log);
+}
+
+
+/** In the console:
+    [{
+        address: "EQCV4FC_GjwyRDx4RAfI9-f1z3Tfi6JBxEOHol8SUpI2xTxT"
+        publicKey: "352f62f1f9d5c8ab5b1d7bdde41a42f94688d23936eebe1399fe60d8c1b62d2a"
+        version: "v4R2"
+    }]
+ */
+```
+
 ### ton_getBalance
 
 #### Parameters
