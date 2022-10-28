@@ -10,9 +10,7 @@ export default () => {
 
     console.log("isOpenMask=", provider.isOpenMask);
     try {
-      const accounts = await provider.send("ton_requestAccounts", {
-        publicKey: true,
-      });
+      const accounts = await provider.send("ton_requestWallets");
       console.log(accounts);
 
       const account = accounts[0].address;
@@ -22,6 +20,7 @@ export default () => {
       setBalance(String(Number(balance) / 1000000000));
     } catch (e) {
       console.error(e);
+      alert(e.message);
     }
   };
 
