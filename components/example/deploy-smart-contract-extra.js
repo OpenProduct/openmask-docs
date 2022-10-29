@@ -4,13 +4,11 @@ import { beginCell, Address, bytesToBase64 } from "@openproduct/web-sdk/cjs";
 import { CheckResult } from "./deploy-smart-contract";
 
 const getIncrementMessage = async () => {
-  const boc = await beginCell()
+  return await beginCell()
     .storeUint(0x37491f2f, 32)
     .storeUint(0, 64)
     .endCell()
-    .toBoc();
-
-  return bytesToBase64(boc);
+    .toHex();
 };
 
 export default () => {
@@ -36,8 +34,8 @@ export default () => {
       const walletSeqNo = await provider.send("ton_sendTransaction", [
         {
           to: new Address(address).toString(false),
-          value: "1000",
-          dataType: "boc",
+          value: "10000000",
+          dataType: "hex",
           data: await getIncrementMessage(),
         },
         wallet,

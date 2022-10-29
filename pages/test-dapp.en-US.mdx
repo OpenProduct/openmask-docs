@@ -9,6 +9,7 @@ import AddTonDnsNft from 'components/example/domain-nft-mainnet'
 import AddNft from 'components/example/nft-mainnet'
 import DonateTransaction from 'components/example/transaction';
 import HexTransaction from 'components/example/deploy-smart-contract-extra';
+import DeployContract from 'components/example/deploy-smart-contract';
 
 # E2E Test Dapp
 
@@ -23,6 +24,7 @@ import HexTransaction from 'components/example/deploy-smart-contract-extra';
 
 ## Transaction
 
+<DeployContract initCounter={Date.now()} />
 <HexTransaction />
 
 ## Sign data
