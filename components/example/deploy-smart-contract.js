@@ -9,7 +9,7 @@ import {
   Address,
 } from "@openproduct/web-sdk/cjs";
 
-const CheckResult = ({ address }) => {
+export const CheckResult = ({ address }) => {
   const network = useNetwork();
 
   const [counter, setCounter] = useState("");
