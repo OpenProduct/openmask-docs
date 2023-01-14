@@ -7,7 +7,7 @@ import {
   parseAddress,
   beginCell,
   Address,
-} from "@openproduct/web-sdk/cjs";
+} from "@openproduct/web-sdk/cjs/index.js";
 
 export const CheckResult = ({ address }) => {
   const network = useNetwork();

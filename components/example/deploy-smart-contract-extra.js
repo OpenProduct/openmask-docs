@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Callout from "nextra-theme-docs/callout";
-import { beginCell, Address, bytesToBase64 } from "@openproduct/web-sdk/cjs";
+import { beginCell, Address } from "@openproduct/web-sdk/cjs/index.js";
 import { CheckResult } from "./deploy-smart-contract";
 
 const getIncrementMessage = async () => {
