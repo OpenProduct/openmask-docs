@@ -25,6 +25,7 @@
   "test-dapp": {
     "title": "E2E Test Dapp",
     "type": "test-dapp",
+    "hidden": true,
     "theme": {
       "sidebar": false
     }
