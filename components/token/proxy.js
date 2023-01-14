@@ -114,9 +114,12 @@ const Connect = () => {
       const jettonWalletAddress = await minter.getJettonWalletAddress(
         new Address(account)
       );
-
-      if (jettonWalletAddress) {
-        setAddress(jettonWalletAddress.toString(true, true, true));
+      const delay = new Promise((resolve) => setTimeout(resolve, 1000));
+      await delay;
+      const walletAddress = jettonWalletAddress.toString(true, true, true);
+      const deployed = await client.isContractDeployed(walletAddress);
+      if (deployed) {
+        setAddress(walletAddress);
       } else {
         setAddress("Missing");
       }
@@ -125,7 +128,7 @@ const Connect = () => {
       // that already provide an access to your dApp
       localStorage.setItem("OpenMask", account);
     } catch (e) {
-      console.error(e);
+      alert(e.message);
     }
   };
 
