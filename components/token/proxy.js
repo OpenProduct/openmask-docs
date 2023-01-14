@@ -7,10 +7,11 @@ import {
   beginCell,
 } from "@openproduct/web-sdk/cjs/index.js";
 import { useNetwork } from "../example/use-network";
+import SwitchMainnet from "../example/advanced-switch";
 
-const JettonMinter = "EQCEEjP7sz4OMDoSfRd9UzykQ6B---fGkBD_JlvBF2TpBPSt";
+const JettonMinter = "EQCjzJ6sm6dbldmlpY3vAm3erathXUJOj3gb0Jab-d0wRpJe";
 
-const ProxyHandler = "EQDEY8thfI0jS826MYM3K37XlzhAYr96OQ5naVJDrk8KJ_I3";
+const ProxyHandler = "EQBe5ADSR2YNeGf9-p2geEDrjtVE81IRClRKU9xucT-mi5Sb";
 
 const proxyMessage = (target, queryId = 0) => {
   return beginCell()
@@ -152,4 +153,10 @@ const Connect = () => {
   );
 };
 
-export default Connect;
+export default () => {
+  return (
+    <SwitchMainnet>
+      <Connect />
+    </SwitchMainnet>
+  );
+};
