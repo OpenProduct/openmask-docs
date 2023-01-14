@@ -1,0 +1,21 @@
+import Proxy from 'components/token/proxy'
+
+# OpenMask Token
+
+## Proxy feature
+
+The jetton wallet supports a proxy feature with allows a `proxy` message. Upon receiving a `proxy` message with a target address,
+it should include jetton balance and jetton wallet owner to message and send it to the target address. Handling a proxy notification
+allows us to verify that at the moment of the transaction, the sender owns some amount of jettons.
+
+The implementation of this technology allows us to implement validation at a contract level and provide utility features for token holders.
+
+The source code for [Jetton Wallet](https://github.com/OpenProduct/openmask-token/blob/main/contracts/jetton-wallet.fc)
+and [Example Proxy Handler](https://github.com/OpenProduct/openmask-token/blob/main/contracts/proxy-handler-example.fc)
+you could find in project [GitHub page](https://github.com/OpenProduct/openmask-token).
+
+## Live demo
+
+Live demo for [Example Proxy Handler](https://github.com/OpenProduct/openmask-token/blob/18c3fa97580f4294fec8cd408e0d03d5148c1652/contracts/proxy-handler-example.fc#L60), with bounce a text message `You own xxx tokens` to wallet owner.
+
+<Proxy />

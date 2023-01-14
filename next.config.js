@@ -13,13 +13,13 @@ module.exports = withNextra({
   redirects: () => {
     return [
       {
-        source: "/docs",
-        destination: "/docs/getting-started",
+        source: "/token",
+        destination: "/token/info",
         statusCode: 301,
       },
       {
-        source: "/blog/swr-1",
-        destination: "/blog/swr-v1",
+        source: "/docs",
+        destination: "/docs/getting-started",
         statusCode: 301,
       },
       {

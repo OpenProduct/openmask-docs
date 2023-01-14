@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@openproduct/web-sdk': ^0.5.0
+  '@openproduct/web-sdk': ^0.21.0
   '@reach/skip-nav': ^0.16.0
   autoprefixer: ^10.4.2
   focus-visible: ^5.1.0
@@ -17,7 +17,7 @@ specifiers:
   tailwindcss: ^3.0.16
 
 dependencies:
-  '@openproduct/web-sdk': 0.5.0
+  '@openproduct/web-sdk': 0.21.0
   '@reach/skip-nav': 0.16.0_sfoxds7t5ydpegc3knd667wn6m
   focus-visible: 5.2.0
   intersection-observer: 0.10.0
@@ -367,11 +367,12 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@openproduct/web-sdk/0.5.0:
-    resolution: {integrity: sha512-VJWNWy+1lexKfmpdZNqc5FyZYv36efu4nqKnsNaWUPKAkHSx6b0QhlFIJPpqOKXgpueZ3r7bbOgEfcyI6+01ug==}
+  /@openproduct/web-sdk/0.21.0:
+    resolution: {integrity: sha512-o4AkYJy92RmVjIk0sGpcKFqu+wCZgBkQ+V3ptmMCpE/zv9S/L77lzibq3Xtjru7zs9kC0zprB7wgBBvl0nDyXg==}
     dependencies:
       bn.js: 4.11.6
       ethjs-unit: 0.1.6
+      jssha: 3.3.0
       tweetnacl: 1.0.3
     dev: false
 
@@ -1148,6 +1149,10 @@ packages:
 
   /jsonc-parser/3.0.0:
     resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}
+    dev: false
+
+  /jssha/3.3.0:
+    resolution: {integrity: sha512-w9OtT4ALL+fbbwG3gw7erAO0jvS5nfvrukGPMWIAoea359B26ALXGpzy4YJSp9yGnpUvuvOw1nSjSoHDfWSr1w==}
     dev: false
 
   /kind-of/6.0.3:

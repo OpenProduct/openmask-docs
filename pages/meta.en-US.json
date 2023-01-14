@@ -4,6 +4,10 @@
     "type": "page",
     "hidden": true
   },
+  "token": {
+    "title": "Token",
+    "type": "page"
+  },
   "docs": {
     "title": "Documentation",
     "type": "page"
