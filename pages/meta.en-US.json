@@ -5,6 +5,7 @@
     "hidden": true
   },
   "token": {
+    "hidden": true,
     "title": "Token",
     "type": "page"
   },
