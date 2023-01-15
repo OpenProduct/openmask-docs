@@ -128,7 +128,7 @@ const Connect = () => {
       // that already provide an access to your dApp
       localStorage.setItem("OpenMask", account);
     } catch (e) {
-      alert(e.message);
+      console.log(e.message);
     }
   };
 
