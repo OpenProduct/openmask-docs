@@ -11,7 +11,7 @@ export default () => {
     const provider = window.ton;
     try {
       const result = await provider.send("ton_encryptMessage", {
-        message: Message,
+        message: btoa(Message),
       });
 
       setEncryptMessage(result);
@@ -28,7 +28,7 @@ export default () => {
         message: encryptMessage,
       });
 
-      setDecryptMessage(result);
+      setDecryptMessage(atob(result));
     } catch (e) {
       console.error(e);
     }
