@@ -4,7 +4,7 @@
   "description": "Website for OpenMask wallet",
   "main": "index.js",
   "scripts": {
-    "dev": "PORT=3030 next",
+    "dev": "next",
     "debug": "NODE_OPTIONS='--inspect' next",
     "start": "next start",
     "build": "next build"
