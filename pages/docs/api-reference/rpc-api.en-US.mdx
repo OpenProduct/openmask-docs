@@ -300,6 +300,59 @@ const signature = await provider.send("ton_personalSign", {
 });
 ```
 
+### ton_encryptMessage
+
+1. `object` - the utf8 data parameters
+2. `message` - the wallet address (optional)
+
+```js
+interface EncryptMessageParams {
+    // Base64 encoded value
+    message: stirng;
+    receiverPublicKey?: string | undefined;
+}
+```
+
+#### Returns
+
+Returns a `Promise` that resolves with a `string` value, with is encrypted message.
+
+#### Example
+
+```js
+const encryptMessage = await provider.send("ton_encryptMessage", {
+    message: btoa("Hello World"),
+});
+```
+
+### ton_decryptMessage
+
+1. `object` - the utf8 data parameters
+2. `message` - the wallet address (optional)
+
+```js
+interface DecryptMessageParams {
+    // Encrypt message
+    message: stirng;
+    senderPublicKey?: string;
+}
+```
+
+#### Returns
+
+Returns a `Promise` that resolves with a `string` value, with is dencrypted message in base64 encoding.
+
+#### Example
+
+```js
+const result = await provider.send("ton_decryptMessage", {
+    message: encryptMessage,
+});
+
+console.log(atob(result)) // "Hello World"
+
+```
+
 ### ton_deployContract
 
 #### Parameters
