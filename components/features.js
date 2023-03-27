@@ -16,42 +16,6 @@ const TITLE_WITH_TRANSLATIONS = {
 // Transaltions for Features
 const FEATURES_WITH_TRANSLATIONS = {
   "en-US": {
-import { useRouter } from "next/router";
-
-import styles from "./features.module.css";
-
-const Feature = ({ text, icon }) => (
-  <div className={styles.feature}>
-    {icon}
-    <h4>{text}</h4>
-  </div>
-);
-
-const TITLE_WITH_TRANSLATIONS = {
-  "en-US": "A TON Wallet in your Browser",
-};
-
-// Transaltions for Features
-const FEATURES_WITH_TRANSLATIONS = {
-  "en-US": {
-import { useRouter } from "next/router";
-
-import styles from "./features.module.css";
-
-const Feature = ({ text, icon }) => (
-  <div className={styles.feature}>
-    {icon}
-    <h4>{text}</h4>
-  </div>
-);
-
-const TITLE_WITH_TRANSLATIONS = {
-  "en-US": "A TON Wallet in your Browser",
-};
-
-// Transaltions for Features
-const FEATURES_WITH_TRANSLATIONS = {
-  "en-US": {
     extension: "First-class web extension wallet",
     developers: "First-class developers tool",
     gateway: "Powerful dApp gateway",
