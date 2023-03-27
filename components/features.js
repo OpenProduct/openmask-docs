@@ -16,9 +16,9 @@ const TITLE_WITH_TRANSLATIONS = {
 // Transaltions for Features
 const FEATURES_WITH_TRANSLATIONS = {
   "en-US": {
-    extension: "First-class web extension wallet",
-    developers: "First-class developers tool",
-    gateway: "Powerful dApp gateway",
+    extension: "Ledger Hardware Wallet",
+    developers: "Web 3.0 (client-only) application",
+    gateway: "Ton Connect 2.0",
     secure: "A key vault, secure login",
     openSource: "Open-source",
     nonCommercial: "Non-commercial project",
