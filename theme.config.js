@@ -113,6 +113,12 @@ export default {
                 <Link href="https://t.me/openproduct" target="_blank">
                   Telegram
                 </Link>
+                <Link
+                  href="https://twitter.com/openmask_wallet"
+                  target="_blank"
+                >
+                  Twitter
+                </Link>
               </div>
               <div>
                 <Title>Legal</Title>
