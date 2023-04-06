@@ -19,7 +19,7 @@ export const Example2 = () => {
       src="/TonMaskExample2.png"
       className={styles.exampleImage}
       style={{
-        margin: "40px 40px 20px 0",
+        margin: "0 40px 20px 0",
         float: "left",
       }}
     />
